@@ -10,7 +10,7 @@ In the above-mentioned *data.R* file I include data from several different sourc
 Variables included:
 | Variable name | Description | Type | Origin |
 | ------------- | ----------- | ---- | ------ |
-| Country       | Country name | String | V-dem v14 |
+| country       | Country name | String | V-dem v14 |
 | iso3c         | ISO3c code | String | V-Dem v14 |
 | year          | Year | Numeric (1994-2023) | V-dem v14 |
 | freedom       | Freedom of Expression and Alternative Sources of Information index | Continuous between 0 and 1 | V-dem v14 `v2x_freexp_altinf` |
