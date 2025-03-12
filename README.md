@@ -12,7 +12,7 @@ Variables included:
 | ------------- | ----------- | ---- | ------ |
 | Country       | Country name | String | V-dem v14 |
 | iso3c         | ISO3c code | String | V-Dem v14 |
-| year          | Year | Numeric (1994-2023 | V-dem v14 |
+| year          | Year | Numeric (1994-2023) | V-dem v14 |
 | freedom       | Freedom of Expression and Alternative Sources of Information index | Continuous between 0 and 1 | V-dem v14 `v2x_freexp_altinf` |
 | internet      | Internet censorship | Continuous between -4.09 and 2.29 | V-dem v14 `v2mecenefi` |
 | fbic          | Dyadic FBIC index-score between a country and China 1 | Continuous between 0 and 1 | FBIC `fbic` |
