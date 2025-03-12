@@ -29,4 +29,5 @@ Variables included:
 
 ## References
 > Levitsky, S. and L. A. Way (2006, July). Linkage versus Leverage. Rethinking the International Dimension of Regime Change. Comparative Politics 38 (4), 379–400. Publisher: Comparative Politics, Ph.D. Programs in Political Science, City University of New York.
+
 > Bergé, L. (2018). “Efficient estimation of maximum likelihood models with multiple fixed-effects: the R package FENmlm.” CREA Discussion Papers. 
