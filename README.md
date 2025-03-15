@@ -5,7 +5,7 @@ This is the repository for all files and data related to my master's thesis work
 My data consist of several R-scripts with different applications. The main script is called *data.R*, and gathers and contains all the data necessary to build the *base* dataset which will be used in constructiong the regression models. The regression models are included in the script called *fixest.R* (name is subject to change). I am running my models as fixed-effects and using the R-package *fixest* (Bergé 2018) to be able to do this. Included is also several different scripts for making maps and figures.
 
 ## Data
-In the above-mentioned *data.R* file I include data from several different sources, and here I explain my variables and where I have gathered them.
+In the above-mentioned *data.R* file I include data from several different sources, and here I explain my variables and where I have gathered them. (NB! FBIC-datasets are not included in the data folder because of size restrictions)
 
 Variables included:
 | Variable name | Description | Type | Origin |
