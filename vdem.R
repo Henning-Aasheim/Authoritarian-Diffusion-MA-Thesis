@@ -44,6 +44,8 @@ full_summary <- function(x){
   return(summary)
 }
 
+# V-DEM DATA -------------------------------------------------------------------
+
 # Loading V-Dem dataset, and sub-setting years after 1994 and adding in COW_codes
 # and ISO3c-codes for countries missing this/are ambiguous.  
 
@@ -155,6 +157,31 @@ socclev <- vdem_1994 %>%
            v2smarrest,     # Arrests for political content
            v2smpolsoc,     # Polarization of society
            v2smpolhate))   # Political parties hate speech
+
+# WORLD MAP DATA ---------------------------------------------------------------
+
+world <- map_data('world') %>% 
+  rename(country = region) %>% 
+  mutate(iso3c = countrycode(country, origin = 'country.name', destination = 'iso3c', warn = F),
+         iso3c = case_when(country == 'Barbuda' ~ 'ATG',
+                           country == 'Canary Islands' ~ 'ESP',
+                           country == 'Micronesia' ~ 'FSM',
+                           country == 'Heard Island' ~ 'AUS',
+                           country == 'Chagos Archipelago' ~ 'GBR',
+                           country == 'Kosovo' ~ 'UNK',
+                           country == 'Saint Martin' ~ 'FRA',
+                           country == 'Bonaire' ~ 'NLD',
+                           country == 'Sint Eustatius' ~ 'NLD',
+                           country == 'Saba' ~ 'NLD',
+                           country == 'Madeira Islands' ~ 'PRT',
+                           country == 'Azores' ~ 'PRT',
+                           country == 'Ascension Island' ~ 'GBR',
+                           country == 'Grenadines' ~ 'VCT',
+                           country == 'Virgin Islands' & subregion == ' British' ~ 'GBR',
+                           country == 'Virgin Islands' & subregion == ' US' ~ 'USA',
+                           country == 'Greenland' ~ 'DNK',
+                           country == 'French Guiana' ~ 'FRA',
+                           .default = as.character(iso3c)))
 
 # FREEDOM OF EXPRESSION DATA ---------------------------------------------------
 

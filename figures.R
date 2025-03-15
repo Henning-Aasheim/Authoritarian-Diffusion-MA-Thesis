@@ -1,10 +1,14 @@
-## ---- myrcode 1
+# CONFIG -----------------------------------------------------------------------
 
 library(tidyverse)
 library(vdemdata)
 library(ggtext)
 
+load('data/base.RData')
+
 vdem <- vdem
+
+# WAVES ------------------------------------------------------------------------
 
 diffs <- vdem %>% 
   select(v2x_polyarchy, year, country_name, country_id) %>% 
@@ -70,7 +74,8 @@ diffs %>%
         legend.text = element_text(size = 13))
 
 ggsave('illustrations/waves.jpeg', dpi = 300, units = 'cm', width = 18, height = 14)
-## ---- myrcode2
+
+# FIRST TEST WAVES -------------------------------------------------------------
 
 diffs %>% 
   ggplot(aes(x = year, y = prct, colour = autdem, group = autdem)) +
@@ -82,21 +87,24 @@ diffs %>%
   geom_vline(aes(xintercept = 2010)) +
   scale_x_continuous(breaks = seq(1780, 2030, 20)) +
   scale_y_continuous(breaks = seq(0, 1, .1)) +
-  scale_colour_manual(values = c()) +
   theme_classic()
+
 summary(vdem$v2x_polyarchy)
+
+# iNDICATOR TEST ---------------------------------------------------------------
 
 indicators_13_23 <- vdem %>% 
   filter(year %in% c(2013, 2023)) %>% 
   select(!starts_with(c('v2x', 'v3'))) %>% 
   group_by(country_name)
 
-# FIRST DIFFERENCE -------------------------------------------------------------
+# Change in freedom score  -----------------------------------------------------
 
-free_count <- first_difference %>% 
-  select(iso3c, year, freedom_fd, internet) %>% 
-  mutate(neg = case_when(freedom_fd < 0 ~ 'neg',
-                         freedom_fd > 0 ~ 'pos',
+free_count <- base %>% 
+  mutate(diff = freedom - lag(freedom, n = 3)) %>% 
+  select(iso3c, year, diff, internet) %>% 
+  mutate(neg = case_when(diff < 0 ~ 'neg',
+                         diff > 0 ~ 'pos',
                          .default = 'zero')) %>% 
   group_by(year, neg) %>% 
   count() %>% 

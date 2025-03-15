@@ -1,4 +1,8 @@
 library(fixest)
+library(modelsummary)
+library(sandwich)
+
+load('data/base.RData')
 
 # Simple -----------------------------------------------------------------------
 
