@@ -551,6 +551,10 @@ attr(base$consolidated_democracy, 'label') <- 'EDI-score of >= 0.8 for 15 consec
 rm(fbic, infl_by_china, west_1_data, west_2_data, infl_by_west_1, infl_by_west_2, gdppc, gdppc_subset, rents, 
    oda_gni, consolidation, consolidation_subset, imf, un, wdi)
 
+if(!file.exists('data/base.RData')){
+  save(fbic, file = 'data/base.RData')
+}
+
 # VARIABLE CHECK ---------------------------------------------------------------
 
 ## Summary ---------------------------------------------------------------------
