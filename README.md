@@ -2,7 +2,7 @@
 This is the repository for all files and data related to my master's thesis work on authoritarian diffusion. To explain it simply: *autocratic diffusion is the phenomenon whereby an increase in autocratic states, may increase the chance that other states become autocratic*. My thesis looks at the influence China, as a big authoritarian country, has on its partner countries through what has been called leverage and linkages (Levitsky and Way 2006).
 
 ## R-scripts
-My data consist of several R-scripts with different applications. The main script is called *data.R*, and gathers and contains all the data necessary to build the *base* dataset which will be used in constructiong the regression models. The regression models are included in the script called *fixest.R* (name is subject to change). I am running my models as fixed-effects and using the R-package *fixest* (Bergé 2018) to be able to do this. Included is also several different scripts for making maps and figures.
+My data consist of several R-scripts with different applications. The main script is called *data.R*, and gathers and contains all the data necessary to build the *base* dataset which will be used in constructiong the regression models. The `base`dataset is included in the data folder, however, for replication and transparency I have added the *data.R* file. If this is not necessary, the *fixest.R* script can be run with the included `base`dataset. The *fbic.R* script must be run with the dataset available at: https://drive.google.com/file/d/1lhLklOw4_R6NoMpg52dP_nT0D-AhYPaf/view (Moyer et al. 2021). The regression models are included in the script called *fixest.R* (name is subject to change). I am running my models as fixed-effects and using the R-package *fixest* (Bergé 2018) to be able to do this. Included is also several different scripts for making maps and figures.
 
 ## Data
 In the above-mentioned *data.R* file I include data from several different sources, and here I explain my variables and where I have gathered them. (NB! FBIC-datasets are not included in the data folder because of size restrictions)
@@ -28,6 +28,8 @@ Variables included:
 | consolidated_democracy | Electoral Democracy Index (EDI) score equal to or greater than .8 for 15 consecutive years | Binary | V-dem v15 (Own calculation based on `v2x_polyarchy`) |
 
 ## References
+> Bergé, L. (2018). “Efficient estimation of maximum likelihood models with multiple fixed-effects: the R package FENmlm.” CREA Discussion Papers. 
+
 > Levitsky, S. and L. A. Way (2006, July). Linkage versus Leverage. Rethinking the International Dimension of Regime Change. Comparative Politics 38 (4), 379–400. Publisher: Comparative Politics, Ph.D. Programs in Political Science, City University of New York.
 
-> Bergé, L. (2018). “Efficient estimation of maximum likelihood models with multiple fixed-effects: the R package FENmlm.” CREA Discussion Papers. 
+> Moyer, J. D., C. J. Meisel, A. S. Matthews, D. K. Bohl, and M. J. Burrows (2021, June). China-US Competition: Measuring Global Influence. Technical report, Atlantic Council.
