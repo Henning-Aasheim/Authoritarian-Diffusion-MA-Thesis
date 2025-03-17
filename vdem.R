@@ -6,8 +6,6 @@ library(maps)
 library(countrycode)
 library(gt)
 library(scales)
-library(rstanarm)
-library(bayesplot)
 library(tidyverse)
 
 ## Palettes --------------------------------------------------------------------
@@ -409,8 +407,8 @@ declining_indicators_4 <- data.frame(
   type = c('Freedom of Expression',  'Freedom of Expression', 
            'Freedom of Association', 'Freedom of Expression', 
            'Deliberative Component', 'Clean Elections',
-           'Liberal Componen',  'Deliberative Component', 
-           'Freedom of Expression', 'Freedom of Expression', 
+           'Liberal Component',      'Deliberative Component', 
+           'Freedom of Expression',  'Freedom of Expression', 
            'Freedom of Expression',  'Freedom of Expression',
            'Liberal Component',      'Participatory Component', 
            'Freedom of Expression',  'Freedom of Association',  
@@ -427,8 +425,7 @@ declining_indicators_4 %>%
            position = position_dodge(width = .75)) +
   scale_x_continuous(expand = expansion(mult = 0),
                      breaks = seq(0, 46, 4)) +
-  scale_fill_manual(values = c('#ff9214', '#ffb168', '#ffd1ac', 
-                               '#f1f1f1', '#5b758b', '#003f5c')) +
+  scale_fill_manual(values = c('#444e86', '#ff6e54', '#ff9214', '#003f5c', '#dd5182', '#955196')) +
   labs(x    = 'Number of declining indicators',
        y    = NULL,
        fill = 'Type:') +
