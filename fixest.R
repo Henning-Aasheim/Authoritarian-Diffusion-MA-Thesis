@@ -1,22 +1,26 @@
 library(fixest)
 library(modelsummary)
 library(sandwich)
+library(tidyverse)
 
 load('data/base.RData')
+
+base <- base %>% 
+  mutate(delta_fbic = fbic - lag(fbic, n = 3))
 
 # Simple -----------------------------------------------------------------------
 
 fixest_m1 <- feols(freedom ~ fbic | iso3c + year, data = base, cluster = 'iso3c')
 
-fixest_m2 <- feols(freedom ~ fbic + west_2 | iso3c + year, data = base, cluster = 'iso3c')
+fixest_m2 <- feols(freedom ~ fbic + gdppc_log | iso3c + year, data = base, cluster = 'iso3c')
 
-fixest_m3 <- feols(freedom ~ fbic  + west_2 + gdppc_log | iso3c + year, data = base, cluster = 'iso3c')
+fixest_m3 <- feols(freedom ~ fbic + gdppc_log + rents | iso3c + year, data = base, cluster = 'iso3c')
 
-fixest_m4 <- feols(freedom ~ fbic  + west_2 + gdppc_log + rents | iso3c + year, data = base, cluster = 'iso3c')
+fixest_m4 <- feols(freedom ~ fbic + gdppc_log + rents + oda | iso3c + year, data = base, cluster = 'iso3c')
 
-fixest_m5 <- feols(freedom ~ fbic  + west_2 + gdppc_log + rents + oda | iso3c + year, data = base, cluster = 'iso3c')
+fixest_m5 <- feols(freedom ~ fbic + gdppc_log + rents + oda + west_2 | iso3c + year, data = base, cluster = 'iso3c')
 
-fixest_m6 <- feols(freedom ~ fbic  + west_2 + gdppc_log + rents + oda + regime | iso3c + year, data = base, cluster = 'iso3c')
+fixest_m6 <- feols(freedom ~ fbic + gdppc_log + rents + oda + west_2 + regime | iso3c + year, data = base, cluster = 'iso3c')
 
 
 fixest_models <- list(
@@ -31,6 +35,32 @@ fixest_models <- list(
 modelsummary(fixest_models, stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001))
 
 # The high R squared is a result of the fixed effects, where I control for many 
+
+# Simple delta_fbic ------------------------------------------------------------
+
+fixest_m1_delta <- feols(freedom ~ delta_fbic | iso3c + year, data = base, cluster = 'iso3c')
+
+fixest_m2_delta <- feols(freedom ~ delta_fbic + gdppc_log | iso3c + year, data = base, cluster = 'iso3c')
+
+fixest_m3_delta <- feols(freedom ~ delta_fbic + gdppc_log + rents | iso3c + year, data = base, cluster = 'iso3c')
+
+fixest_m4_delta <- feols(freedom ~ delta_fbic + gdppc_log + rents + oda | iso3c + year, data = base, cluster = 'iso3c')
+
+fixest_m5_delta <- feols(freedom ~ delta_fbic + gdppc_log + rents + oda + west_2 | iso3c + year, data = base, cluster = 'iso3c')
+
+fixest_m6_delta <- feols(freedom ~ delta_fbic + gdppc_log + rents + oda + west_2 + regime | iso3c + year, data = base, cluster = 'iso3c')
+
+
+fixest_models_delta <- list(
+  'm1' = fixest_m1_delta,
+  'm2' = fixest_m2_delta,
+  'm3' = fixest_m3_delta,
+  'm4' = fixest_m4_delta,
+  'm5' = fixest_m5_delta,
+  'm6' = fixest_m6_delta
+)
+
+modelsummary(fixest_models_delta, stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001))
 
 # Lag 1 ------------------------------------------------------------------------
 
