@@ -1,5 +1,9 @@
 # CONFIGURATION ----------------------------------------------------------------
 
+# Updating V-Dem
+
+#devtools::install_github("vdeminstitute/vdemdata")
+
 library(countrycode)
 library(vdemdata)
 library(modelsummary)
