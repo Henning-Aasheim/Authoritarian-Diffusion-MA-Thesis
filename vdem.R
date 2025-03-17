@@ -318,11 +318,11 @@ freedom_change_10_map %>%
 
 # INDICATORS -------------------------------------------------------------------
 
+## Declining indicators 2013-2023 ----------------------------------------------
+
 # Top 20 declining indicator (V_DEM: Nord et al. 2024)
 
-## Declining indicators --------------------------------------------------------
-
-declining_indicators <- data.frame(
+declining_indicators_3 <- data.frame(
   indicator = c('Government censorship effort (Media)', 
                 'Freedom of academic and cultural expression',
                 'Harassment of journalists',
@@ -356,7 +356,7 @@ declining_indicators <- data.frame(
   decline = c(45, 39, 36, 35, 35, 34, 33, 31, 30, 29, 29, 27, 26, 26, 26, 25, 25, 24, 24, 23)
 )
 
-declining_indicators %>% 
+declining_indicators_3 %>% 
   ggplot(aes(y = reorder(indicator, decline))) +
   geom_bar(aes(x = decline, fill = type),
            stat = 'identity', 
@@ -380,7 +380,68 @@ declining_indicators %>%
         legend.text = element_text(size = 15),
         panel.grid.major.x = element_line(),
         panel.grid.minor.x = element_line(linetype = 'dashed'))
-  
-  
+
+## Declining indicators 2013-2023 ----------------------------------------------
+
+# Top 20 declining indicator (V_DEM: Nord et al. 2024)
+
+declining_indicators_4 <- data.frame(
+  indicator = c('Government censorship effort (Media)', 
+                'Freedom of academic and cultural expression',
+                'CSO repression',
+                'Harassment of journalists',
+                'Engaged society',
+                'Elections free and fair',
+                'Transparent laws with predictable enforcement',
+                'Range of consultation',
+                'Media self-censorship',
+                'Media bias',
+                'Print/broadcast media critical',
+                'Freedom of discussion for men',
+                'Legislature investigates in practice',
+                'CSO consultation',
+                'Freedom of discussion for women',
+                'CSO entry and exit',
+                'Reasoned justification',
+                'Print/boadcast media perspectives',
+                'Opposition parties autonomy',
+                'Freedom from political killings'),
+  type = c('Freedom of Expression',  'Freedom of Expression', 
+           'Freedom of Association', 'Freedom of Expression', 
+           'Deliberative Component', 'Clean Elections',
+           'Liberal Componen',  'Deliberative Component', 
+           'Freedom of Expression', 'Freedom of Expression', 
+           'Freedom of Expression',  'Freedom of Expression',
+           'Liberal Component',      'Participatory Component', 
+           'Freedom of Expression',  'Freedom of Association',  
+           'Deliberative Component', 'Freedom of Expression',
+           'Freedom of Association', 'Liberal Component'),
+  decline = c(44, 41, 41, 35, 33, 33, 32, 32, 32, 31, 30, 30, 29, 29, 28, 28, 27, 27, 27, 27)
+)
+
+declining_indicators_4 %>% 
+  ggplot(aes(y = reorder(indicator, decline))) +
+  geom_bar(aes(x = decline, fill = type),
+           stat = 'identity', 
+           width = 0.7,
+           position = position_dodge(width = .75)) +
+  scale_x_continuous(expand = expansion(mult = 0),
+                     breaks = seq(0, 46, 4)) +
+  scale_fill_manual(values = c('#ff9214', '#ffb168', '#ffd1ac', 
+                               '#f1f1f1', '#5b758b', '#003f5c')) +
+  labs(x    = 'Number of declining indicators',
+       y    = NULL,
+       fill = 'Type:') +
+  guides(fill = guide_legend(nrow = 2)) +
+  theme_classic(base_family = 'serif') +
+  theme(legend.position = 'bottom',
+        legend.justification = c(0, 1),
+        legend.margin = margin(l = -100, unit = 'mm'),
+        axis.title = element_text(size = 15, face = 'bold'),
+        legend.title = element_text(size = 15, face = 'bold'),
+        axis.text = element_text(size = 15),
+        legend.text = element_text(size = 15),
+        panel.grid.major.x = element_line(),
+        panel.grid.minor.x = element_line(linetype = 'dashed'))
   
   
