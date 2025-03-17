@@ -20,7 +20,7 @@ Variables included:
 | west_1        | A restricted sample of Western countries: *Andorra, Australia, Austria, Belgium, Canada, Denmark, Finland, France, Germany, Greece, Iceland, Ireland, Israel, Italy, Japan, Liechtenstein, Luxembourg, Malta, Monaco, Netherlands, New Zealand, Norway, Portugal, San Marino, Spain, Sweden, Switzerland, United Kingdom, United States* | Continuous between 0 and 4.85 | My own definition |
 | west_2        | An expanded sample of Western countries: *Andorra, Australia, Austria, Belgium, Bulgaria, Canada, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, Germany, Greece, Hungary, Iceland, Ireland, Israel, Italy, Japan, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Netherlands, New Zealand, Norway, Poland, Portugal, Romania, San Marino, Slovakia, Slovenia, South Korea, Spain, Sweden, Switzerland, Taiwan, United Kingdom, United States* | Continuous between 0 and 5.32 | My own definition |
 | gdppc         | GDP per capita in current US$ averaged from data produced by the World Bank, IMF, and UN | Continuous between 78.91 and 134167.99 | Created from data from WDI, WEO, and UNSD `NY.GDP.PCAP.CD, NGDPDPC` |
-| gdppc_log     | GDP per capita (log-transformed) | Logged version of `gdppc` | Continuous between 4.37 and 11.81 | See `gdppc` |
+| gdppc_log     | GDP per capita (log-transformed) | Continuous between 4.37 and 11.81 | Logged version of `gdppc` |
 | rents         | Natural resource rents (% of GDP) | Continuous between 0 and 88.59 | WDI `NY.GDP.TOTL.RT.ZS` |
 | oil           | Oil rents (% of GDP) | Continuous between 0 and 82.78 | WDI `NY.GDP.PETR.RT.ZS` |
 | gas           | Gas rents (% of GDP) | Continuous between 0 and 55.01 | WDI `NY.GDP.NGAS.RT.ZS` |
