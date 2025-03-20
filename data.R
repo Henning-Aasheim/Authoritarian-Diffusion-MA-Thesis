@@ -9,8 +9,8 @@ library(vdemdata)
 library(modelsummary)
 library(sandwich)
 library(tinytable)
-library(countrycode)
 library(tidyverse)
+library(WDI)
 
 # To disable `siunitx` and prevent `modelsummary` from wrapping numeric entries 
 # in `\num{}`, call:
@@ -575,7 +575,12 @@ datasummary(freedom + fbic + regime + west_2 + gdppc + rents + oda ~
           color = '#ff9214')
 
 
+GDP_diff <- base %>% 
+  group_by(country) %>% 
+  summarise(min = min(na.omit(gdppc)),
+            max = max(na.omit(gdppc))) %>% 
+  mutate(diff = max - min)
 
-
-
+GDP_diff_2 <- base %>% 
+  filter(year == 2023)
 

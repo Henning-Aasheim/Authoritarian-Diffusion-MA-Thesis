@@ -1,12 +1,10 @@
 # CONFIGURATION ---------------------------------------------------------------
 
-library(vdemdata)
-library(ggtext)
-library(maps)
-library(countrycode)
-library(gt)
-library(scales)
-library(tidyverse)
+library(maps) # Used to download map data and make maps
+library(countrycode) # Used to make country names compatible
+library(gt) # Used to make tables
+library(scales) # Used to create bins and breaks for the tables (col_bin())
+library(tidyverse) # Used for data wrangling
 
 ## Palettes --------------------------------------------------------------------
 
@@ -55,20 +53,55 @@ bins_7_rev <- col_bin(bins = c(-1, -.2, -.08, -.03, .03, .08, .2, 1),
                               '#ffd1ac', '#ffb168', '#ff9214'))
 
 
+# DEFINITIONS ------------------------------------------------------------------
+
+## Restricted ------------------------------------------------------------------
+
+# Creates a definition of the West that is relatively restricted: my criteria are
+# that the country have a long history of democracy and is well established 
+# within the Western sphere of influence. Countries that democratised relatively
+# late like Poland and South Korea are not included.
+
+west_1 <- c('Andorra', 'Australia', 'Austria', 'Belgium', 'Canada', 'Denmark', 
+            'Finland', 'France', 'Germany', 'Greece', 'Iceland', 'Ireland', 
+            'Israel', 'Italy', 'Japan', 'Liechtenstein', 'Luxembourg', 'Malta', 
+            'Monaco', 'Netherlands', 'New Zealand', 'Norway', 'Portugal', 
+            'San Marino', 'Spain', 'Sweden', 'Switzerland', 'United Kingdom', 
+            'United States')
+
+
+## Expanded --------------------------------------------------------------------
+
+# The more expansive definition of the West is less restricted: my criteria are 
+# that the country belong to the EU27 or has a reputation of strong democracy
+# tracing back to the 1990s.
+
+west_2 <- c('Andorra', 'Australia', 'Austria', 'Belgium', 'Bulgaria', 'Canada', 
+            'Croatia', 'Cyprus', 'Czech Republic', 'Denmark', 'Estonia', 
+            'Finland', 'France', 'Germany', 'Greece', 'Hungary', 'Iceland', 
+            'Ireland', 'Israel', 'Italy', 'Japan', 'Latvia', 'Liechtenstein', 
+            'Lithuania', 'Luxembourg', 'Malta', 'Netherlands', 'New Zealand', 
+            'Norway', 'Poland', 'Portugal', 'Romania', 'San Marino', 'Slovakia', 
+            'Slovenia', 'South Korea', 'Spain', 'Sweden', 'Switzerland', 
+            'Taiwan', 'United Kingdom', 'United States')
+
 # FBIC INDEX DATA --------------------------------------------------------------
 
 ## Restrict and save smaller version -------------------------------------------
 
-if(!file.exists('data/fbic_short.RData')){
+if(!file.exists('data/fbic.RData')){
   fbic <- read.csv('data/fbic.csv') %>% 
-    filter(year >= 1994 & countrya %in% c('China', west_2))
+    filter(year >= 1994 & countrya %in% c('China', west_2)) %>% 
+    select(countrya, countryb, year, iso3a, iso3b, fbic, bandwidth, 
+           politicalbandwidth, economicbandwidth, securitybandwidth, dependence, 
+           economicdependence, securitydependence)
   
-  save(fbic, file = 'data/fbic_short.RData')
+  save(fbic, file = 'data/fbic.RData')
 }
 
 ## Load fbic index -------------------------------------------------------------
 
-load('data/fbic_short.RData')
+load('data/fbic.RData')
 
 # The main FBIC-variable is measured from 0 to 1, where 0 indicates no 
 # influence from Country A on Country B, and 1 indicates the most influence ever 
