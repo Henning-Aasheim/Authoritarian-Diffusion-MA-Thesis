@@ -18,9 +18,9 @@ fixest_m3 <- feols(freedom ~ fbic + gdppc_log + rents | iso3c + year, data = bas
 
 fixest_m4 <- feols(freedom ~ fbic + gdppc_log + rents + oda | iso3c + year, data = base, cluster = 'iso3c')
 
-fixest_m5 <- feols(freedom ~ fbic + gdppc_log + rents + oda + west_2 | iso3c + year, data = base, cluster = 'iso3c')
+fixest_m5 <- feols(freedom ~ fbic + gdppc_log + rents + oda + west_2_fbic | iso3c + year, data = base, cluster = 'iso3c')
 
-fixest_m6 <- feols(freedom ~ fbic + gdppc_log + rents + oda + west_2 + factor(regime) | iso3c + year, data = base, cluster = 'iso3c')
+fixest_m6 <- feols(freedom ~ fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | iso3c + year, data = base, cluster = 'iso3c')
 
 
 fixest_models <- list(
@@ -46,9 +46,9 @@ fixest_m3_delta <- feols(freedom ~ delta_fbic + gdppc_log + rents | iso3c + year
 
 fixest_m4_delta <- feols(freedom ~ delta_fbic + gdppc_log + rents + oda | iso3c + year, data = base, cluster = 'iso3c')
 
-fixest_m5_delta <- feols(freedom ~ delta_fbic + gdppc_log + rents + oda + west_2 | iso3c + year, data = base, cluster = 'iso3c')
+fixest_m5_delta <- feols(freedom ~ delta_fbic + gdppc_log + rents + oda + west_2_fbic | iso3c + year, data = base, cluster = 'iso3c')
 
-fixest_m6_delta <- feols(freedom ~ delta_fbic + gdppc_log + rents + oda + west_2 + factor(regime) | iso3c + year, data = base, cluster = 'iso3c')
+fixest_m6_delta <- feols(freedom ~ delta_fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | iso3c + year, data = base, cluster = 'iso3c')
 
 
 fixest_models_delta <- list(
@@ -72,9 +72,9 @@ fixest_m3_lag_1 <- feols(freedom ~ l(fbic, 1) + l(gdppc_log, 1) + l(rents, 1) | 
 
 fixest_m4_lag_1 <- feols(freedom ~ l(fbic, 1) + l(gdppc_log, 1) + l(rents, 1) + l(oda, 1) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_m5_lag_1 <- feols(freedom ~ l(fbic, 1) + l(gdppc_log, 1) + l(rents, 1) + l(oda, 1) + l(west_2, 1) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_m5_lag_1 <- feols(freedom ~ l(fbic, 1) + l(gdppc_log, 1) + l(rents, 1) + l(oda, 1) + l(west_2_fbic, 1) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_m6_lag_1 <- feols(freedom ~ l(fbic, 1) + l(gdppc_log, 1) + l(rents, 1) + l(oda, 1) + l(west_2, 1) + l(factor(regime), 1) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_m6_lag_1 <- feols(freedom ~ l(fbic, 1) + l(gdppc_log, 1) + l(rents, 1) + l(oda, 1) + l(west_2_fbic, 1) + l(factor(regime), 1) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
 fixest_models_lag_1 <- list(
   'm1' = fixest_m1_lag_1,
@@ -97,9 +97,9 @@ fixest_m3_lag_1_delta <- feols(freedom ~ l(delta_fbic, 1) + l(gdppc_log, 1) + l(
 
 fixest_m4_lag_1_delta <- feols(freedom ~ l(delta_fbic, 1) + l(gdppc_log, 1) + l(rents, 1) + l(oda, 1) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_m5_lag_1_delta <- feols(freedom ~ l(delta_fbic, 1) + l(gdppc_log, 1) + l(rents, 1) + l(oda, 1) + l(west_2, 1) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_m5_lag_1_delta <- feols(freedom ~ l(delta_fbic, 1) + l(gdppc_log, 1) + l(rents, 1) + l(oda, 1) + l(west_2_fbic, 1) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_m6_lag_1_delta <- feols(freedom ~ l(delta_fbic, 1) + l(gdppc_log, 1) + l(rents, 1) + l(oda, 1) + l(west_2, 1) + l(factor(regime), 1) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_m6_lag_1_delta <- feols(freedom ~ l(delta_fbic, 1) + l(gdppc_log, 1) + l(rents, 1) + l(oda, 1) + l(west_2_fbic, 1) + l(factor(regime), 1) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
 fixest_models_lag_1_delta <- list(
   'm1' = fixest_m1_lag_1_delta,
@@ -122,9 +122,9 @@ fixest_m3_lag_2 <- feols(freedom ~ l(fbic, 2) + l(gdppc_log, 2) + l(rents, 2) | 
 
 fixest_m4_lag_2 <- feols(freedom ~ l(fbic, 2) + l(gdppc_log, 2) + l(rents, 2) + l(oda, 2) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_m5_lag_2 <- feols(freedom ~ l(fbic, 2) + l(gdppc_log, 2) + l(rents, 2) + l(oda, 2) + l(west_2, 2) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_m5_lag_2 <- feols(freedom ~ l(fbic, 2) + l(gdppc_log, 2) + l(rents, 2) + l(oda, 2) + l(west_2_fbic, 2) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_m6_lag_2 <- feols(freedom ~ l(fbic, 2) + l(gdppc_log, 2) + l(rents, 2) + l(oda, 2) + l(west_2, 2) + l(factor(regime), 2) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_m6_lag_2 <- feols(freedom ~ l(fbic, 2) + l(gdppc_log, 2) + l(rents, 2) + l(oda, 2) + l(west_2_fbic, 2) + l(factor(regime), 2) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
 fixest_models_lag_2 <- list(
   'm1' = fixest_m1_lag_2,
@@ -147,9 +147,9 @@ fixest_m3_lag_3 <- feols(freedom ~ l(fbic, 3) + l(gdppc_log, 3) + l(rents, 3) | 
 
 fixest_m4_lag_3 <- feols(freedom ~ l(fbic, 3) + l(gdppc_log, 3) + l(rents, 3) + l(oda, 3) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_m5_lag_3 <- feols(freedom ~ l(fbic, 3) + l(gdppc_log, 3) + l(rents, 3) + l(oda, 3) + l(west_2, 3) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_m5_lag_3 <- feols(freedom ~ l(fbic, 3) + l(gdppc_log, 3) + l(rents, 3) + l(oda, 3) + l(west_2_fbic, 3) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_m6_lag_3 <- feols(freedom ~ l(fbic, 3) + l(gdppc_log, 3) + l(rents, 3) + l(oda, 3) + l(west_2, 3) + l(factor(regime), 3) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_m6_lag_3 <- feols(freedom ~ l(fbic, 3) + l(gdppc_log, 3) + l(rents, 3) + l(oda, 3) + l(west_2_fbic, 3) + l(factor(regime), 3) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
 fixest_models_lag_3 <- list(
   'm1' = fixest_m1_lag_3,
@@ -166,15 +166,15 @@ modelsummary(fixest_models_lag_3, stars = c("x" = .1, "*" = .05,"**" = .01, '***
 
 fixest_m1_lag_4 <- feols(freedom ~ l(fbic, 4) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_m2_lag_4 <- feols(freedom ~ l(fbic, 4) + l(west_2, 4) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_m2_lag_4 <- feols(freedom ~ l(fbic, 4) + l(west_2_fbic, 4) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_m3_lag_4 <- feols(freedom ~ l(fbic, 4) + l(west_2, 4) + l(gdppc_log, 4) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_m3_lag_4 <- feols(freedom ~ l(fbic, 4) + l(west_2_fbic, 4) + l(gdppc_log, 4) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_m4_lag_4 <- feols(freedom ~ l(fbic, 4) + l(west_2, 4) + l(gdppc_log, 4) + l(rents, 4) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_m4_lag_4 <- feols(freedom ~ l(fbic, 4) + l(west_2_fbic, 4) + l(gdppc_log, 4) + l(rents, 4) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_m5_lag_4 <- feols(freedom ~ l(fbic, 4) + l(west_2, 4) + l(gdppc_log, 4) + l(rents, 4) + l(oda, 4) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_m5_lag_4 <- feols(freedom ~ l(fbic, 4) + l(west_2_fbic, 4) + l(gdppc_log, 4) + l(rents, 4) + l(oda, 4) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_m6_lag_4 <- feols(freedom ~ l(fbic, 4) + l(west_2, 4) + l(gdppc_log, 4) + l(rents, 4) + l(oda, 4) + l(regime, 4) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_m6_lag_4 <- feols(freedom ~ l(fbic, 4) + l(west_2_fbic, 4) + l(gdppc_log, 4) + l(rents, 4) + l(oda, 4) + l(regime, 4) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
 fixest_models_lag_4 <- list(
   'm1' = fixest_m1_lag_4,
@@ -191,15 +191,15 @@ modelsummary(fixest_models_lag_4, stars = c("x" = .1, "*" = .05,"**" = .01, '***
 
 fixest_m1_lag_5 <- feols(freedom ~ l(fbic, 5) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_m2_lag_5 <- feols(freedom ~ l(fbic, 5) + l(west_2, 5) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_m2_lag_5 <- feols(freedom ~ l(fbic, 5) + l(west_2_fbic, 5) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_m3_lag_5 <- feols(freedom ~ l(fbic, 5) + l(west_2, 5) + l(gdppc_log, 5) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_m3_lag_5 <- feols(freedom ~ l(fbic, 5) + l(west_2_fbic, 5) + l(gdppc_log, 5) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_m4_lag_5 <- feols(freedom ~ l(fbic, 5) + l(west_2, 5) + l(gdppc_log, 5) + l(rents, 5) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_m4_lag_5 <- feols(freedom ~ l(fbic, 5) + l(west_2_fbic, 5) + l(gdppc_log, 5) + l(rents, 5) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_m5_lag_5 <- feols(freedom ~ l(fbic, 5) + l(west_2, 5) + l(gdppc_log, 5) + l(rents, 5) + l(oda, 5) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_m5_lag_5 <- feols(freedom ~ l(fbic, 5) + l(west_2_fbic, 5) + l(gdppc_log, 5) + l(rents, 5) + l(oda, 5) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_m6_lag_5 <- feols(freedom ~ l(fbic, 5) + l(west_2, 5) + l(gdppc_log, 5) + l(rents, 5) + l(oda, 5) + l(regime, 5) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_m6_lag_5 <- feols(freedom ~ l(fbic, 5) + l(west_2_fbic, 5) + l(gdppc_log, 5) + l(rents, 5) + l(oda, 5) + l(regime, 5) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
 fixest_models_lag_5 <- list(
   'm1' = fixest_m1_lag_5,
@@ -216,17 +216,17 @@ modelsummary(fixest_models_lag_5, stars = c("x" = .1, "*" = .05,"**" = .01, '***
 
 ## Lag 3 -----------------------------------------------------------------------
 
-fixest_int_lag_0 <- feols(freedom ~ fbic*factor(regime) + west_2 + gdppc_log + rents + oda | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_int_lag_0 <- feols(freedom ~ fbic*factor(regime) + west_2_fbic + gdppc_log + rents + oda | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_int_lag_1 <- feols(freedom ~ l(fbic, 1)*factor(l(regime, 1)) + l(west_2, 1) + l(gdppc_log, 1) + l(rents, 1) + l(oda, 1) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_int_lag_1 <- feols(freedom ~ l(fbic, 1)*factor(l(regime, 1)) + l(west_2_fbic, 1) + l(gdppc_log, 1) + l(rents, 1) + l(oda, 1) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_int_lag_2 <- feols(freedom ~ l(fbic, 2)*factor(l(regime, 2)) + l(west_2, 2) + l(gdppc_log, 2) + l(rents, 2) + l(oda, 2) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_int_lag_2 <- feols(freedom ~ l(fbic, 2)*factor(l(regime, 2)) + l(west_2_fbic, 2) + l(gdppc_log, 2) + l(rents, 2) + l(oda, 2) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_int_lag_3 <- feols(freedom ~ l(fbic, 3)*factor(l(regime, 3)) + l(west_2, 3) + l(gdppc_log, 3) + l(rents, 3) + l(oda, 3) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_int_lag_3 <- feols(freedom ~ l(fbic, 3)*factor(l(regime, 3)) + l(west_2_fbic, 3) + l(gdppc_log, 3) + l(rents, 3) + l(oda, 3) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_int_lag_4 <- feols(freedom ~ l(fbic, 4)*factor(l(regime, 4)) + l(west_2, 4) + l(gdppc_log, 4) + l(rents, 4) + l(oda, 4) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_int_lag_4 <- feols(freedom ~ l(fbic, 4)*factor(l(regime, 4)) + l(west_2_fbic, 4) + l(gdppc_log, 4) + l(rents, 4) + l(oda, 4) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
-fixest_int_lag_5 <- feols(freedom ~ l(fbic, 5)*factor(l(regime, 5)) + l(west_2, 5) + l(gdppc_log, 5) + l(rents, 5) + l(oda, 5) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
+fixest_int_lag_5 <- feols(freedom ~ l(fbic, 5)*factor(l(regime, 5)) + l(west_2_fbic, 5) + l(gdppc_log, 5) + l(rents, 5) + l(oda, 5) | iso3c + year, data = base, cluster = 'iso3c', panel.id = ~iso3c+year)
 
 fixest_models_int_lag <- list(
   'No lag' = fixest_int_lag_0,
@@ -280,12 +280,12 @@ fixest_int_map <- list(
   'l(fbic, 3):factor(l(regime, 3))3' = 'fbic:R3',
   'l(fbic, 4):factor(l(regime, 4))3' = 'fbic:R3',
   'l(fbic, 5):factor(l(regime, 5))3' = 'fbic:R3',
-  'west_2' = 'west',
-  'l(west_2, 1)' = 'west',
-  'l(west_2, 2)' = 'west',
-  'l(west_2, 3)' = 'west',
-  'l(west_2, 4)' = 'west',
-  'l(west_2, 5)' = 'west',
+  'west_2_fbic' = 'west',
+  'l(west_2_fbic, 1)' = 'west',
+  'l(west_2_fbic, 2)' = 'west',
+  'l(west_2_fbic, 3)' = 'west',
+  'l(west_2_fbic, 4)' = 'west',
+  'l(west_2_fbic, 5)' = 'west',
   'gdppc_log' = 'gdppc',
   'l(gdppc_log, 1)' = 'gdppc',
   'l(gdppc_log, 2)' = 'gdppc',

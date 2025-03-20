@@ -115,16 +115,19 @@ base <- vdem %>%
 
 ## Restrict and save smaller version -------------------------------------------
 
-if(!file.exists('data/fbic_short.RData')){
+if(!file.exists('data/fbic.RData')){
   fbic <- read.csv('data/fbic.csv') %>% 
-    filter(year >= 1994 & countrya %in% c('China', west_2))
+    filter(year >= 1994 & countrya %in% c('China', west_2)) %>% 
+    select(countrya, countryb, year, iso3a, iso3b, fbic, bandwidth, 
+           politicalbandwidth, economicbandwidth, securitybandwidth, dependence, 
+           economicdependence, securitydependence)
   
-  save(fbic, file = 'data/fbic_short.RData')
+  save(fbic, file = 'data/fbic.RData')
 }
 
 ## Load fbic index -------------------------------------------------------------
 
-load('data/fbic_short.RData')
+load('data/fbic.RData')
 
 # The main FBIC-variable is measured from 0 to 1, where 0 indicates no 
 # influence from Country A on Country B, and 1 indicates the most influence ever 
@@ -144,7 +147,7 @@ load('data/fbic_short.RData')
 
 infl_by_china <- fbic %>% 
   filter(countrya == 'China' & year >= 1994) %>% 
-  select(c(countryb, year, iso3b, fbic)) %>% 
+  select(countryb, iso3b, year, fbic, bandwidth) %>% 
   rename(iso3c = iso3b) %>% 
   group_by(iso3c)
 
@@ -154,15 +157,15 @@ infl_by_china <- fbic %>%
 
 west_1_data <- fbic %>% 
   filter(countrya %in% west_1 & year >= 1994) %>% 
-  select(c(countryb, year, iso3b, fbic)) %>% 
+  select(countryb, iso3b, year, fbic, bandwidth) %>% 
   rename(iso3c = iso3b) %>% 
   group_by(iso3c, year)
 
 # Summarise the total influence from restricted 'West'
 
 infl_by_west_1 <- west_1_data %>% 
-  summarise(sum(fbic)) %>% 
-  rename(west_1 = 'sum(fbic)')
+  summarise(across(c(fbic, bandwidth), sum)) %>% 
+  rename(west_1_fbic = fbic, west_1_bandwidth = bandwidth)
 
 ## West_2 influence data -------------------------------------------------------
 
@@ -170,15 +173,15 @@ infl_by_west_1 <- west_1_data %>%
 
 west_2_data <- fbic %>% 
   filter(countrya %in% west_2 & year >= 1994) %>% 
-  select(c(countryb, year, iso3b, fbic)) %>% 
+  select(countryb, year, iso3b, fbic, bandwidth) %>% 
   rename(iso3c = iso3b) %>% 
   group_by(iso3c, year)
 
 # Summarise the total influence from expanded 'West'
 
 infl_by_west_2 <- west_2_data %>% 
-  summarise(sum(fbic)) %>% 
-  rename(west_2 = 'sum(fbic)')
+  summarise(across(c(fbic, bandwidth), sum)) %>% 
+  rename(west_2_fbic = fbic, west_2_bandwidth = bandwidth)
 
 
 
@@ -538,15 +541,18 @@ base <- base %>%
 
 # Sets attributes to dataframe
 
-attr(base$country,  'label') <- 'Country name'
-attr(base$iso3c,    'label') <- 'ISO3C code'
-attr(base$year,     'label') <- 'Year'
-attr(base$freedom,  'label') <- 'Freedom of expression (v2x_freexp_altinf)'
-attr(base$internet, 'label') <- 'Internet censorship (v2mecenefi)'
-attr(base$fbic,     'label') <- 'FBIC index score from China (fbic)'
-attr(base$regime,   'label') <- 'Ordinal regime variable 0-3 (v2x_regime)'
-attr(base$west_1,                 'label') <- 'FBIC index total score from the \'West\' (restricted)'
-attr(base$west_2,                 'label') <- 'FBIC index total score from the \'West\' (expanded)'
+attr(base$country,   'label') <- 'Country name'
+attr(base$iso3c,     'label') <- 'ISO3C code'
+attr(base$year,      'label') <- 'Year'
+attr(base$freedom,   'label') <- 'Freedom of expression (v2x_freexp_altinf)'
+attr(base$internet,  'label') <- 'Internet censorship (v2mecenefi)'
+attr(base$fbic,      'label') <- 'FBIC index score from China (fbic)'
+attr(base$bandwidth, 'label') <- 'FBIC bandwidth score from China (bandwidth)'
+attr(base$regime,    'label') <- 'Ordinal regime variable 0-3 (v2x_regime)'
+attr(base$west_1_fbic,            'label') <- 'FBIC index total score from the \'West\' (restricted)'
+attr(base$west_1_bandwidth,       'label') <- 'FBIC bandwidth total score from the \'West\' (expanded)'
+attr(base$west_2_fbic,            'label') <- 'FBIC index total score from the \'West\' (restricted)'
+attr(base$west_2_bandwidth,       'label') <- 'FBIC bandwidth total score from the \'West\' (expanded)'
 attr(base$oda,                    'label') <- 'Official Development Assistance [ODA] (% of GNI)'
 attr(base$consolidated_democracy, 'label') <- 'EDI-score of >= 0.8 for 15 consecutive year'
 
@@ -556,31 +562,35 @@ rm(fbic, infl_by_china, west_1_data, west_2_data, infl_by_west_1, infl_by_west_2
    oda_gni, consolidation, consolidation_subset, imf, un, wdi)
 
 if(!file.exists('data/base.RData')){
-  save(fbic, file = 'data/base.RData')
+  save(base, file = 'data/base.RData')
 }
 
 # VARIABLE CHECK ---------------------------------------------------------------
 
 ## Summary ---------------------------------------------------------------------
 
-datasummary(freedom + fbic + regime + west_2 + gdppc + rents + oda ~ 
+datasummary(freedom + fbic + regime + west_2_fbic + gdppc + rents + oda ~ 
               N + Mean + Median + SD + Min + Max + Density, 
             data = base) %>% 
   plot_tt(j = 8,
           fun = 'density',
           data = list(base$freedom, base$fbic,
-                      base$regime, base$west_2, 
+                      base$regime, base$west_2_fbic, 
                       base$gdppc, base$rents, 
                       base$oda),
           color = '#ff9214')
 
+# Checks which country has the largest difference in GDP per capita for the
+# years 1994-2023
 
-GDP_diff <- base %>% 
-  group_by(country) %>% 
-  summarise(min = min(na.omit(gdppc)),
-            max = max(na.omit(gdppc))) %>% 
-  mutate(diff = max - min)
+# GDP_diff <- base %>% 
+#   group_by(country) %>% 
+#   summarise(min = min(na.omit(gdppc)),
+#             max = max(na.omit(gdppc))) %>% 
+#   mutate(diff = max - min)
 
-GDP_diff_2 <- base %>% 
-  filter(year == 2023)
+# Checks which two countries has the largest GDP per capita difference between 
+# them in 2023
 
+# GDP_diff_2 <- base %>% 
+#   filter(year == 2023)
