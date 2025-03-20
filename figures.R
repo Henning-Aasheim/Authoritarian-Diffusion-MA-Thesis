@@ -73,7 +73,7 @@ diffs %>%
         axis.text = element_text(size = 13),
         legend.text = element_text(size = 13))
 
-ggsave('illustrations/waves.jpeg', dpi = 300, units = 'cm', width = 18, height = 14)
+#ggsave('illustrations/waves.jpeg', dpi = 300, units = 'cm', width = 18, height = 14)
 
 # FIRST TEST WAVES -------------------------------------------------------------
 
