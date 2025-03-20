@@ -454,7 +454,6 @@ base <- base %>%
   left_join(infl_by_china, by = c('iso3c', 'year')) %>% 
   filter(!(iso3c %in% c('PWB', 'PGZ', 'SOL', 'EAZ', 'CHN'))) %>% 
   select(!(countryb)) %>%
-  filter(!is.na(fbic)) %>% 
   rename(country  = country_name) %>% 
   ungroup()
 

@@ -441,4 +441,3 @@ declining_indicators_4 %>%
         panel.grid.major.x = element_line(),
         panel.grid.minor.x = element_line(linetype = 'dashed'))
   
-  
