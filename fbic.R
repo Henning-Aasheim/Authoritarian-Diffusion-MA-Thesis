@@ -10,15 +10,15 @@ library(tidyverse) # Used for data wrangling
 
 ### Palette defining five levels ------------------------------------------------
 
-palette_6 <- setNames(c('#ff9214', '#ffb168', '#ffd1ac', 
-                        '#f1f1f1', '#5b758b', '#003f5c'), 
+palette_chn <- setNames(c('#ff9214', '#ffb168', '#ffd1ac', '#f1f1f1', 
+                        '#a4b1bd', '#5b758b', '#003f5c'), 
                       c('Very strong positive change', 'Strong positive change', 
                         'Positive change', 'No or small change', 
-                        'Negative Change', 'Strong negative change'))
+                        'Negative change', 'Strong negative change', 'Very strong negative change'))
 
 ### Palette defining seven levels ----------------------------------------------
 
-palette_7 <- setNames(c('#ff9214', '#ffb168', '#ffd1ac', '#f1f1f1', 
+palette_chn_us <- setNames(c('#ff9214', '#ffb168', '#ffd1ac', '#f1f1f1', 
                         '#a4b1bd', '#5b758b', '#003f5c'), 
                    c('Strongly China influenced', 'China influenced', 
                      'Weakly China influenced', 'Similar', 'Weakly US influenced', 
@@ -28,13 +28,13 @@ palette_7 <- setNames(c('#ff9214', '#ffb168', '#ffd1ac', '#f1f1f1',
 
 ### Five-level break -----------------------------------------------------------
 
-breaks_6 <- c('Very strong positive change', 'Strong positive change', 
+breaks_chn <- c('Very strong positive change', 'Strong positive change', 
               'Positive change', 'No or small change', 
-              'Negative Change', 'Strong negative change')
+              'Negative change', 'Strong negative change', 'Very strong negative change')
 
 ### Seven-level break ----------------------------------------------------------
 
-breaks_7 <- c('Strongly China influenced', 'China influenced', 
+breaks_chn_us <- c('Strongly China influenced', 'China influenced', 
               'Weakly China influenced', 'Similar', 'Weakly US influenced', 
               'US influenced', 'Strongly US influenced')
 
@@ -200,13 +200,30 @@ infl_change <- fbic %>%
   select(c(countryb, year, iso3b, fbic)) %>%
   rename(iso3c = iso3b) %>% 
   group_by(iso3c) %>% 
+  rows_append(data.frame(countryb = 'Serbia',
+                         year     = 1994,
+                         iso3c    = 'SRB',
+                         fbic     = as.numeric(0.003460911))) %>% 
+  rows_append(data.frame(countryb = 'Kosovo',
+                       year     = 1994,
+                       iso3c    = 'UNK',
+                       fbic     = as.numeric(0.003460911))) %>% 
+  rows_append(data.frame(countryb = 'Montenegro',
+                         year     = 1994,
+                         iso3c    = 'MNE',
+                         fbic     = as.numeric(0.003460911))) %>% 
+  rows_append(data.frame(countryb = 'South Sudan',
+                         year     = 1994,
+                         iso3c    = 'SSD',
+                         fbic     = as.numeric(0.09932989))) %>% 
   summarise(fbic = diff(fbic)) %>% 
   mutate(fbic_nom = case_when(fbic >=  .2                 ~ 'Very strong positive change',
-                              fbic  <  .2 & fbic >=  .08  ~ 'Strong positive change',
+                              fbic  <  .2  & fbic >=  .08 ~ 'Strong positive change',
                               fbic  <  .08 & fbic >=  .03 ~ 'Positive change',
                               fbic  <  .03 & fbic >= -.03 ~ 'No or small change',
-                              fbic  < -.08 & fbic >  -.03 ~ 'Negative Change',
-                              fbic <= -.2                 ~ 'Strong negative change'))
+                              fbic  < -.03 & fbic >= -.08 ~ 'Negative change',
+                              fbic  < -.08  & fbic >= -.2  ~ 'Strong negative change',
+                              fbic <= -.2                 ~ 'Very strong negative change'))
 
 ## Change in Western influence data (Restricted) -------------------------------
 
@@ -367,7 +384,7 @@ map_base_diff %>%
   ggplot(aes(long, lat, group = group)) + 
   coord_fixed(1.3) +
   geom_polygon(aes(fill = fbic_nom), colour = 'black') +
-  scale_fill_manual(values = palette_7, breaks = breaks_7) +
+  scale_fill_manual(values = palette_chn_us, breaks = breaks_chn_us) +
   labs(fill = 'Influence:') +
   theme_void(base_family = 'serif') +
   theme(legend.position = 'bottom',
@@ -402,8 +419,9 @@ map_base_change %>%
   ggplot(aes(long, lat, group = group)) + 
   coord_fixed(1.3) +
   geom_polygon(aes(fill = fbic_nom), colour = 'black') +
-  scale_fill_manual(values = palette_6, breaks = breaks_6, na.value = 'grey') +
+  scale_fill_manual(values = palette_chn, breaks = breaks_chn, na.value = 'grey40') +
   labs(fill = 'Chinese influence:') +
+  guides(fill = guide_legend(nrow = 3)) +
   theme_void(base_family = 'serif') +
   theme(legend.position = 'bottom',
         legend.title = element_text(margin = margin(b = 18, r = 10, unit = 'pt'),
@@ -418,7 +436,7 @@ map_base_change_west_1 %>%
   ggplot(aes(long, lat, group = group)) + 
   coord_fixed(1.3) +
   geom_polygon(aes(fill = fbic_nom), colour = 'black') +
-  scale_fill_manual(values = palette_6, breaks = breaks_6) +
+  scale_fill_manual(values = palette_chn, breaks = breaks_chn) +
   labs(fill = 'Western influence:') +
   theme_void(base_family = 'serif') +
   theme(legend.position = 'bottom',
@@ -434,7 +452,7 @@ map_base_change_west_2 %>%
   ggplot(aes(long, lat, group = group)) + 
   coord_fixed(1.3) +
   geom_polygon(aes(fill = fbic_nom), colour = 'black') +
-  scale_fill_manual(values = palette_6, breaks = breaks_6) +
+  scale_fill_manual(values = palette_chn, breaks = breaks_chn) +
   labs(fill = 'Western influence:') +
   theme_void(base_family = 'serif') +
   theme(legend.position = 'bottom',

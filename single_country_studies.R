@@ -196,3 +196,33 @@ base %>%
         axis.line.y = element_line(colour = '#003f5c'),
         axis.ticks.y = element_line(colour = '#003f5c'))
 
+# Facet plot -------------------------------------------------------------------
+
+base %>% 
+  filter(country %in% c('Timor-Leste', 'Nicaragua', 'Cambodia','North Korea')) %>% 
+  ggplot(aes(x = year)) +
+  facet_wrap(~factor(country, levels = c('Timor-Leste', 'Nicaragua', 'Cambodia','North Korea')), scales = 'free') +
+  geom_line(aes(y = freedom), colour = '#003f5c', linewidth = 1.5) +
+  geom_line(aes(y = fbic), colour = '#ff9214', linewidth = 1.5) +
+  scale_x_continuous(breaks = seq(1994, 2024, 5)) +
+  scale_y_continuous(name = 'Freedom of expression', 
+                     sec.axis = sec_axis(~ .,
+                                         name = 'Linkages to China', 
+                                         breaks = seq(0, 1, .1)),
+                     breaks = seq(0, 1, .1),
+                     limits = c(0, 1)) +
+  labs(x = 'Year') +
+  theme_classic(base_family = 'serif') +
+  theme(axis.title = element_text(size = 15, face = 'bold'),
+        axis.text = element_text(size = 15),
+        axis.title.y.right = element_text(colour = '#ff9214'),
+        axis.text.y.right = element_text(colour = '#ff9214'),
+        axis.line.y.right = element_line(colour = '#ff9214'),
+        axis.ticks.y.right = element_line(colour = '#ff9214'),
+        axis.title.y = element_text(colour = '#003f5c'),
+        axis.text.y = element_text(colour = '#003f5c'),
+        axis.line.y = element_line(colour = '#003f5c'),
+        axis.ticks.y = element_line(colour = '#003f5c'),
+        strip.background = element_blank(),
+        strip.text = element_text(size = 15, face = 'bold'),
+        panel.spacing.x = unit(6, 'mm'))
