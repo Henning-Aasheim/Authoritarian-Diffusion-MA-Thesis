@@ -19,9 +19,6 @@ options("modelsummary_format_numeric_latex" = "plain")
 
 # NB! REMEMBER TO LOAD THESE LIBERARIS WHEN GATHERING DATA!
 
-#library(WDI)
-library(readsdmx)
-
 ## Data grafting check ---------------------------------------------------------
 
 # fbic_unique <- unique(infl_by_china$iso3c)

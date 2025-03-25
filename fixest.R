@@ -3,6 +3,11 @@ library(modelsummary)
 library(sandwich)
 library(tidyverse)
 
+# To disable `siunitx` and prevent `modelsummary` from wrapping numeric entries 
+# in `\num{}`, call:
+
+options("modelsummary_format_numeric_latex" = "plain")
+
 load('data/base.RData')
 
 base <- base %>% 
@@ -10,45 +15,48 @@ base <- base %>%
 
 # Simple -----------------------------------------------------------------------
 
-fixest_m1 <- feols(freedom ~ fbic | iso3c + year, data = base, cluster = 'iso3c')
+fixest_m1 <- feols(l(freedom, 1) ~ fbic | country + year, data = base, cluster = 'country', panel.id = ~country+year)
 
-fixest_m2 <- feols(freedom ~ fbic + gdppc_log | iso3c + year, data = base, cluster = 'iso3c')
+fixest_m2 <- feols(l(freedom, 1) ~ fbic + gdppc_log | country + year, data = base, cluster = 'country', panel.id = ~country+year)
 
-fixest_m3 <- feols(freedom ~ fbic + gdppc_log + rents | iso3c + year, data = base, cluster = 'iso3c')
+fixest_m3 <- feols(l(freedom, 1) ~ fbic + gdppc_log + rents | country + year, data = base, cluster = 'country', panel.id = ~country+year)
 
-fixest_m4 <- feols(freedom ~ fbic + gdppc_log + rents + oda | iso3c + year, data = base, cluster = 'iso3c')
+fixest_m4 <- feols(l(freedom, 1) ~ fbic + gdppc_log + rents + oda | country + year, data = base, cluster = 'country', panel.id = ~country+year)
 
-fixest_m5 <- feols(freedom ~ fbic + gdppc_log + rents + oda + west_2_fbic | iso3c + year, data = base, cluster = 'iso3c')
+fixest_m5 <- feols(l(freedom, 1) ~ fbic + gdppc_log + rents + oda + west_2_fbic | country+ year, data = base, cluster = 'country', panel.id = ~country+year)
 
-fixest_m6 <- feols(freedom ~ fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | iso3c + year, data = base, cluster = 'iso3c')
+fixest_m6 <- feols(l(freedom, 1) ~ fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | country + year, data = base, cluster = 'country', panel.id = ~country+year)
 
 
 fixest_models <- list(
-  'm1' = fixest_m1,
-  'm2' = fixest_m2,
-  'm3' = fixest_m3,
-  'm4' = fixest_m4,
-  'm5' = fixest_m5,
-  'm6' = fixest_m6
+  'Model 1' = fixest_m1,
+  'Model 2' = fixest_m2,
+  'Model 3' = fixest_m3,
+  'Model 4' = fixest_m4,
+  'Model 5' = fixest_m5,
+  'Model 6' = fixest_m6
 )
 
-modelsummary(fixest_models, stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001))
+modelsummary(fixest_models, 
+             stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
+             gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 'adj.r.squared', 'r2.within.adjusted'),
+             output = 'latex')
 
 # The high R squared is a result of the fixed effects, where I control for many 
 
 # Simple delta_fbic ------------------------------------------------------------
 
-fixest_m1_delta <- feols(freedom ~ delta_fbic | iso3c + year, data = base, cluster = 'iso3c')
+fixest_m1_delta <- feols(l(freedom, 1) ~ delta_fbic | country + year, data = base, cluster = 'country', panel.id = ~country+year)
 
-fixest_m2_delta <- feols(freedom ~ delta_fbic + gdppc_log | iso3c + year, data = base, cluster = 'iso3c')
+fixest_m2_delta <- feols(l(freedom, 1) ~ delta_fbic + gdppc_log | country + year, data = base, cluster = 'country', panel.id = ~country+year)
 
-fixest_m3_delta <- feols(freedom ~ delta_fbic + gdppc_log + rents | iso3c + year, data = base, cluster = 'iso3c')
+fixest_m3_delta <- feols(l(freedom, 1) ~ delta_fbic + gdppc_log + rents | country + year, data = base, cluster = 'country', panel.id = ~country+year)
 
-fixest_m4_delta <- feols(freedom ~ delta_fbic + gdppc_log + rents + oda | iso3c + year, data = base, cluster = 'iso3c')
+fixest_m4_delta <- feols(l(freedom, 1) ~ delta_fbic + gdppc_log + rents + oda | country + year, data = base, cluster = 'country', panel.id = ~country+year)
 
-fixest_m5_delta <- feols(freedom ~ delta_fbic + gdppc_log + rents + oda + west_2_fbic | iso3c + year, data = base, cluster = 'iso3c')
+fixest_m5_delta <- feols(l(freedom, 1) ~ delta_fbic + gdppc_log + rents + oda + west_2_fbic | country + year, data = base, cluster = 'country', panel.id = ~country+year)
 
-fixest_m6_delta <- feols(freedom ~ delta_fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | iso3c + year, data = base, cluster = 'iso3c')
+fixest_m6_delta <- feols(l(freedom, 1) ~ delta_fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | country + year, data = base, cluster = 'country', panel.id = ~country+year)
 
 
 fixest_models_delta <- list(
