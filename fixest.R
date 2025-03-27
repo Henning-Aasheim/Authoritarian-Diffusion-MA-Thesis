@@ -82,7 +82,59 @@ modelsummary(fixest_models,
 
 # The high R squared is a result of the fixed effects, where I control for many 
 
-## Simple delta_fbic -----------------------------------------------------------
+## Lagged simple ---------------------------------------------------------------
+
+fixest_m1_lag <- feols(l(freedom, 2) ~ fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | 
+                         country + year, 
+                       data     = base, 
+                       cluster  = 'country', 
+                       panel.id = ~country+year)
+
+fixest_m2_lag <- feols(l(freedom, 3) ~ fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | 
+                         country + year, 
+                       data     = base, 
+                       cluster  = 'country', 
+                       panel.id = ~country+year)
+
+fixest_m3_lag <- feols(l(freedom, 4) ~ fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | 
+                         country + year, 
+                       data     = base, 
+                       cluster  = 'country', 
+                       panel.id = ~country+year)
+
+fixest_m4_lag <- feols(l(freedom, 5) ~ fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | 
+                         country + year, 
+                       data     = base, 
+                       cluster  = 'country', 
+                       panel.id = ~country+year)
+
+
+fixest_models_lag <- list(
+  'Model 1' = fixest_m6,
+  'Model 2' = fixest_m1_lag,
+  'Model 3' = fixest_m2_lag,
+  'Model 4' = fixest_m3_lag,
+  'Model 5' = fixest_m4_lag
+)
+
+fixest_map_lag <- list(
+  'fbic'            = 'Linkages to China',
+  'gdppc_log'       = 'log(GDP per capita)',
+  'rents'           = 'Resource rents',
+  'oda'             = 'Aid',
+  'west_2_fbic'     = 'Linkages (West)',
+  'factor(regime)1' = 'Electoral autocracy',
+  'factor(regime)2' = 'Electoral democracy',
+  'factor(regime)3' = 'Liberal democracy'
+)
+
+modelsummary(fixest_models_lag, 
+             stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
+             coef_map = fixest_map,
+             gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
+                         'adj.r.squared', 'r2.within.adjusted'))
+
+## Delta -----------------------------------------------------------------------
 
 fixest_m1_delta <- feols(l(freedom, 1) ~ delta_fbic | 
                            country + year, 
@@ -147,7 +199,7 @@ modelsummary(fixest_models_delta,
              gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
                          'adj.r.squared', 'r2.within.adjusted'))
 
-## lagged delta_fbic ------------------------------------------------------------
+## Lagged delta ----------------------------------------------------------------
 
 fixest_m6_delta_2 <- feols(l(freedom, 2) ~ delta_fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | 
                              country + year, 
@@ -174,7 +226,7 @@ fixest_m6_delta_5 <- feols(l(freedom, 5) ~ delta_fbic + gdppc_log + rents + oda 
                            panel.id = ~country+year)
 
 
-fixest_models_lag <- list(
+fixest_models_delta_lag <- list(
   'Model 1.12' = fixest_m6_delta,
   'Model 1.13' = fixest_m6_delta_2,
   'Model 1.14' = fixest_m6_delta_3,
@@ -182,7 +234,7 @@ fixest_models_lag <- list(
   'Model 1.16' = fixest_m6_delta_5
 )
 
-fixest_map_lag <- list(
+fixest_map_delta_lag <- list(
   'delta_fbic'      = 'Linkages to China',
   'gdppc_log'       = 'log(GDP per capita)',
   'rents'           = 'Resource rents',
@@ -193,9 +245,9 @@ fixest_map_lag <- list(
   'factor(regime)3' = 'Liberal democracy'
 )
 
-modelsummary(fixest_models_lag, 
+modelsummary(fixest_models_delta_lag, 
              stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001),
-             coef_map = fixest_map_lag,
+             coef_map = fixest_map_delta_lag,
              gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
                          'adj.r.squared', 'r2.within.adjusted'))
 
@@ -263,6 +315,60 @@ modelsummary(interaction_models,
              gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
                          'adj.r.squared', 'r2.within.adjusted'))
 
+## Lagged simple -----------------------------------------------------------------------
+
+interaction_m1_lag <- feols(l(freedom, 2) ~ fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+                              country+ year, 
+                            data     = base, 
+                            cluster  = 'country', 
+                            panel.id = ~country+year)
+
+interaction_m2_lag <- feols(l(freedom, 3) ~ fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+                              country+ year, 
+                            data     = base, 
+                            cluster  = 'country', 
+                            panel.id = ~country+year)
+
+interaction_m3_lag <- feols(l(freedom, 4) ~ fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+                              country+ year, 
+                            data     = base, 
+                            cluster  = 'country', 
+                            panel.id = ~country+year)
+
+interaction_m4_lag <- feols(l(freedom, 5) ~ fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+                              country+ year, 
+                            data     = base, 
+                            cluster  = 'country', 
+                            panel.id = ~country+year)
+
+interaction_models_lag <- list(
+  'Model 1' = interaction_m5,
+  'Model 2' = interaction_m1_lag,
+  'Model 3' = interaction_m2_lag,
+  'Model 4' = interaction_m3_lag,
+  'Model 5' = interaction_m4_lag
+)
+
+interaction_map_lag <- list(
+  'fbic'                 = 'Linkages to China',
+  'factor(regime)1'      = 'Electoral autocracy',
+  'factor(regime)2'      = 'Electoral democracy',
+  'factor(regime)3'      = 'Liberal democracy',
+  'fbic:factor(regime)1' = 'China x El.Aut.',
+  'fbic:factor(regime)2' = 'China x El.Dem.',
+  'fbic:factor(regime)3' = 'China x Lib.Dem.',
+  'gdppc_log'            = 'log(GDP per capita)',
+  'rents'                = 'Resource rents',
+  'oda'                  = 'Aid',
+  'west_2_fbic'          = 'Linkages (West)'
+)
+
+modelsummary(interaction_models_lag, 
+             stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
+             coef_map = interaction_map_lag,
+             gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
+                         'adj.r.squared', 'r2.within.adjusted'))
+
 ## Delta -----------------------------------------------------------------------
 
 interaction_m1_delta <- feols(l(freedom, 1) ~ delta_fbic*factor(regime) | 
@@ -324,7 +430,7 @@ modelsummary(interaction_models_delta,
                          'adj.r.squared', 'r2.within.adjusted'))
 
 
-## Hypothesis 2 & 3 lag --------------------------------------------------------
+## Lagged delta --------------------------------------------------------
 
 
 interaction_m1_lag <- feols(l(freedom, 2) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
