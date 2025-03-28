@@ -63,12 +63,12 @@ robust_m6 <- feols(freedom ~ fbic + gdppc_log + rents + oda + west_2_fbic + fact
 
 
 robust_models <- list(
-  'Model 1.1' = robust_m1,
-  'Model 1.2' = robust_m2,
-  'Model 1.3' = robust_m3,
-  'Model 1.4' = robust_m4,
-  'Model 1.5' = robust_m5,
-  'Model 1.6' = robust_m6
+  'Model A.2.1' = robust_m1,
+  'Model A.2.2' = robust_m2,
+  'Model A.2.3' = robust_m3,
+  'Model A.2.4' = robust_m4,
+  'Model A.2.5' = robust_m5,
+  'Model A.2.6' = robust_m6
 )
 
 robust_map <- list(
@@ -129,12 +129,12 @@ robust_m6_delta <- feols(freedom ~ delta_fbic + gdppc_log + rents + oda + west_2
 
 
 robust_delta <- list(
-  'Model 1.7'  = robust_m1_delta,
-  'Model 1.8'  = robust_m2_delta,
-  'Model 1.9'  = robust_m3_delta,
-  'Model 1.10' = robust_m4_delta,
-  'Model 1.11' = robust_m5_delta,
-  'Model 1.12' = robust_m6_delta
+  'Model A.2.7'  = robust_m1_delta,
+  'Model A.2.8'  = robust_m2_delta,
+  'Model A.2.9'  = robust_m3_delta,
+  'Model A.2.10' = robust_m4_delta,
+  'Model A.2.11' = robust_m5_delta,
+  'Model A.2.12' = robust_m6_delta
 )
 
 robust_delta_map <- list(
@@ -188,11 +188,11 @@ robust_m6_delta_5 <- feols(l(freedom, 1) ~ delta_fbic_5 + gdppc_log + rents + od
 
 
 robust_models_delta <- list(
-  'Model R.1' = robust_m6_delta_1,
-  'Model R.2' = robust_m6_delta_2,
-  'Model R.3' = robust_m6_delta_3,
-  'Model R.4' = robust_m6_delta_4,
-  'Model R.5' = robust_m6_delta_5
+  'Model A.3.1' = robust_m6_delta_1,
+  'Model A.3.2' = robust_m6_delta_2,
+  'Model A.3.3' = robust_m6_delta_3,
+  'Model A.3.4' = robust_m6_delta_4,
+  'Model A.3.5' = robust_m6_delta_5
 )
 
 robust_map_delta <- list(
@@ -217,6 +217,129 @@ modelsummary(robust_models_delta,
                          'adj.r.squared', 'r2.within.adjusted'))
 
 ## Interaction -----------------------------------------------------------------
+
+### Simple without lag ---------------------------------------------------------
+
+interaction_m1_r <- feols(freedom ~ fbic*factor(regime) | 
+                     country + year, 
+                   data     = base, 
+                   cluster  = 'country', 
+                   panel.id = ~country+year)
+
+interaction_m2_r <- feols(freedom ~ fbic*factor(regime) + gdppc_log | 
+                     country + year, 
+                   data     = base, 
+                   cluster  = 'country', 
+                   panel.id = ~country+year)
+
+interaction_m3_r <- feols(freedom ~ fbic*factor(regime) + gdppc_log + rents |
+                     country + year, 
+                   data     = base, 
+                   cluster  = 'country', 
+                   panel.id = ~country+year)
+
+interaction_m4_r <- feols(freedom ~ fbic*factor(regime) + gdppc_log + rents + oda | 
+                     country + year, 
+                   data     = base, 
+                   cluster  = 'country', 
+                   panel.id = ~country+year)
+
+interaction_m5_r <- feols(freedom ~ fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+                     country+ year, 
+                   data     = base, 
+                   cluster  = 'country', 
+                   panel.id = ~country+year)
+
+
+interaction_models_r <- list(
+  'Model A.2.13' = interaction_m1_r,
+  'Model A.2.14' = interaction_m2_r,
+  'Model A.2.15' = interaction_m3_r,
+  'Model A.2.16' = interaction_m4_r,
+  'Model A.2.17' = interaction_m5_r
+)
+
+interaction_map_r <- list(
+  'fbic'                 = 'Linkages to China',
+  'factor(regime)1'      = 'Electoral autocracy',
+  'factor(regime)2'      = 'Electoral democracy',
+  'factor(regime)3'      = 'Liberal democracy',
+  'fbic:factor(regime)1' = 'China x El.Aut.',
+  'fbic:factor(regime)2' = 'China x El.Dem.',
+  'fbic:factor(regime)3' = 'China x Lib.Dem.',
+  'gdppc_log'            = 'log(GDP per capita)',
+  'rents'                = 'Resource rents',
+  'oda'                  = 'Aid',
+  'west_2_fbic'          = 'Linkages (West)'
+)
+
+modelsummary(interaction_models_r, 
+             stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
+             coef_map = interaction_map_r,
+             gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
+                         'adj.r.squared', 'r2.within.adjusted'))
+
+
+### Delta without lag ----------------------------------------------------------
+
+interaction_m1_delta_r <- feols(freedom ~ delta_fbic*factor(regime) | 
+                           country + year, 
+                         data     = base, 
+                         cluster  = 'country', 
+                         panel.id = ~country+year)
+
+interaction_m2_delta_r <- feols(freedom ~ delta_fbic*factor(regime) + gdppc_log | 
+                           country + year, 
+                         data     = base, 
+                         cluster  = 'country',
+                         panel.id = ~country+year)
+
+interaction_m3_delta_r <- feols(freedom ~ delta_fbic*factor(regime) + gdppc_log + rents | 
+                           country + year, 
+                         data     = base, 
+                         cluster  = 'country', 
+                         panel.id = ~country+year)
+
+interaction_m4_delta_r <- feols(freedom ~ delta_fbic*factor(regime) + gdppc_log + rents + oda | 
+                           country + year, 
+                         data     = base, 
+                         cluster  = 'country', 
+                         panel.id = ~country+year)
+
+interaction_m5_delta_r <- feols(freedom ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic |
+                           country + year, 
+                         data     = base, 
+                         cluster  = 'country', 
+                         panel.id = ~country+year)
+
+
+interaction_delta_r <- list(
+  'Model A.2.18'  = interaction_m1_delta_r,
+  'Model A.2.19'  = interaction_m2_delta_r,
+  'Model A.2.20'  = interaction_m3_delta_r,
+  'Model A.2.21' = interaction_m4_delta_r,
+  'Model A.2.22' = interaction_m5_delta_r
+)
+
+interaction_delta_map_r <- list(
+  'delta_fbic'                 = 'Linkages to China',
+  'factor(regime)1'            = 'Electoral autocracy',
+  'factor(regime)2'            = 'Electoral democracy',
+  'factor(regime)3'            = 'Liberal democracy',
+  'delta_fbic:factor(regime)1' = 'China x El.Aut.',
+  'delta_fbic:factor(regime)2' = 'China x El.Dem.',
+  'delta_fbic:factor(regime)3' = 'China x Lib.Dem.',
+  'gdppc_log'                  = 'log(GDP per capita)',
+  'rents'                      = 'Resource rents',
+  'oda'                        = 'Aid',
+  'west_2_fbic'                = 'Linkages (West)'
+)
+
+modelsummary(interaction_delta_r, 
+             stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001),
+             coef_map = interaction_delta_map_r,
+             gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
+                         'adj.r.squared', 'r2.within.adjusted'))
 
 ### Delta 1-5 interaction ------------------------------------------------------
 
@@ -251,11 +374,11 @@ robust_m5_delta_5 <- feols(l(freedom, 1) ~ delta_fbic_5*factor(regime) + gdppc_l
                            panel.id = ~country+year)
 
 robust_interaction_delta <- list(
-  'Model R.6'  = robust_m5_delta_1,
-  'Model R.7'  = robust_m5_delta_2,
-  'Model R.8'  = robust_m5_delta_3,
-  'Model R.9'  = robust_m5_delta_4,
-  'Model R.10' = robust_m5_delta_5
+  'Model A.3.6'  = robust_m5_delta_1,
+  'Model A.3.7'  = robust_m5_delta_2,
+  'Model A.3.8'  = robust_m5_delta_3,
+  'Model A.3.9'  = robust_m5_delta_4,
+  'Model A.3.10' = robust_m5_delta_5
 )
 
 robust_interaction_delta_map <- list(
@@ -338,12 +461,12 @@ bandwidth_m6 <- feols(l(freedom, 1) ~ bandwidth + gdppc_log + rents + oda + west
 
 
 bandwidth_models <- list(
-  'Model 1.1' = bandwidth_m1,
-  'Model 1.2' = bandwidth_m2,
-  'Model 1.3' = bandwidth_m3,
-  'Model 1.4' = bandwidth_m4,
-  'Model 1.5' = bandwidth_m5,
-  'Model 1.6' = bandwidth_m6
+  'Model A.4.1' = bandwidth_m1,
+  'Model A.4.2' = bandwidth_m2,
+  'Model A.4.3' = bandwidth_m3,
+  'Model A.4.4' = bandwidth_m4,
+  'Model A.4.5' = bandwidth_m5,
+  'Model A.4.6' = bandwidth_m6
 )
 
 bandwidth_map <- list(
@@ -455,12 +578,12 @@ bandwidth_m6_delta <- feols(l(freedom, 1) ~ delta_bandwidth + gdppc_log + rents 
 
 
 bandwidth_models_delta <- list(
-  'Model 1.7'  = bandwidth_m1_delta,
-  'Model 1.8'  = bandwidth_m2_delta,
-  'Model 1.9'  = bandwidth_m3_delta,
-  'Model 1.10' = bandwidth_m4_delta,
-  'Model 1.11' = bandwidth_m5_delta,
-  'Model 1.12' = bandwidth_m6_delta
+  'Model A.4.7'  = bandwidth_m1_delta,
+  'Model A.4.8'  = bandwidth_m2_delta,
+  'Model A.4.9'  = bandwidth_m3_delta,
+  'Model A.4.10' = bandwidth_m4_delta,
+  'Model A.4.11' = bandwidth_m5_delta,
+  'Model A.4.12' = bandwidth_m6_delta
 )
 
 bandwidth_map_delta <- list(
@@ -568,11 +691,11 @@ robust_interaction_m5 <- feols(l(freedom, 1) ~ bandwidth*factor(regime) + gdppc_
                         panel.id = ~country+year)
 
 robust_interaction_models <- list(
-  'Model 2.1' = robust_interaction_m1,
-  'Model 2.2' = robust_interaction_m2,
-  'Model 2.3' = robust_interaction_m3,
-  'Model 2.4' = robust_interaction_m4,
-  'Model 2.5' = robust_interaction_m5
+  'Model A.4.13' = robust_interaction_m1,
+  'Model A.4.14' = robust_interaction_m2,
+  'Model A.4.15' = robust_interaction_m3,
+  'Model A.4.16' = robust_interaction_m4,
+  'Model A.4.17' = robust_interaction_m5
 )
 
 robust_interaction_map <- list(
@@ -628,11 +751,11 @@ robust_interaction_m5_delta <- feols(l(freedom, 1) ~ delta_bandwidth*factor(regi
                               panel.id = ~country+year)
 
 robust_interaction_models_delta <- list(
-  'Model 2.6'  = robust_interaction_m1_delta,
-  'Model 2.7'  = robust_interaction_m2_delta,
-  'Model 2.8'  = robust_interaction_m3_delta,
-  'Model 2.9'  = robust_interaction_m4_delta,
-  'Model 2.10' = robust_interaction_m5_delta
+  'Model A.4.18'  = robust_interaction_m1_delta,
+  'Model A.4.19'  = robust_interaction_m2_delta,
+  'Model A.4.20'  = robust_interaction_m3_delta,
+  'Model A.4.21'  = robust_interaction_m4_delta,
+  'Model A.4.22' = robust_interaction_m5_delta
 )
 
 robust_interaction_map_delta <- list(

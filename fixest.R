@@ -110,11 +110,11 @@ fixest_m4_lag <- feols(l(freedom, 5) ~ fbic + gdppc_log + rents + oda + west_2_f
 
 
 fixest_models_lag <- list(
-  'Model 1' = fixest_m6,
-  'Model 2' = fixest_m1_lag,
-  'Model 3' = fixest_m2_lag,
-  'Model 4' = fixest_m3_lag,
-  'Model 5' = fixest_m4_lag
+  'Model A.1' = fixest_m6,
+  'Model A.2' = fixest_m1_lag,
+  'Model A.3' = fixest_m2_lag,
+  'Model A.4' = fixest_m3_lag,
+  'Model A.5' = fixest_m4_lag
 )
 
 fixest_map_lag <- list(
@@ -227,11 +227,11 @@ fixest_m6_delta_5 <- feols(l(freedom, 5) ~ delta_fbic + gdppc_log + rents + oda 
 
 
 fixest_models_delta_lag <- list(
-  'Model 1.12' = fixest_m6_delta,
-  'Model 1.13' = fixest_m6_delta_2,
-  'Model 1.14' = fixest_m6_delta_3,
-  'Model 1.15' = fixest_m6_delta_4,
-  'Model 1.16' = fixest_m6_delta_5
+  'Model A.1.6'  = fixest_m6_delta,
+  'Model A.1.7'  = fixest_m6_delta_2,
+  'Model A.1.8'  = fixest_m6_delta_3,
+  'Model A.1.9'  = fixest_m6_delta_4,
+  'Model A.1.10' = fixest_m6_delta_5
 )
 
 fixest_map_delta_lag <- list(
@@ -342,11 +342,11 @@ interaction_m4_lag <- feols(l(freedom, 5) ~ fbic*factor(regime) + gdppc_log + re
                             panel.id = ~country+year)
 
 interaction_models_lag <- list(
-  'Model 1' = interaction_m5,
-  'Model 2' = interaction_m1_lag,
-  'Model 3' = interaction_m2_lag,
-  'Model 4' = interaction_m3_lag,
-  'Model 5' = interaction_m4_lag
+  'Model A.1.11'  = interaction_m5,
+  'Model A.1.12'  = interaction_m1_lag,
+  'Model A.1.13'  = interaction_m2_lag,
+  'Model A.1.14'  = interaction_m3_lag,
+  'Model A.1.15'  = interaction_m4_lag
 )
 
 interaction_map_lag <- list(
@@ -458,11 +458,11 @@ interaction_m4_lag <- feols(l(freedom, 5) ~ delta_fbic*factor(regime) + gdppc_lo
                               panel.id = ~country+year)
 
 interaction_models_lag <- list(
-  'Model 2.11' = interaction_m5_delta,
-  'Model 2.12' = interaction_m1_lag,
-  'Model 2.13' = interaction_m2_lag,
-  'Model 2.14' = interaction_m3_lag,
-  'Model 2.15' = interaction_m4_lag
+  'Model A.1.16' = interaction_m5_delta,
+  'Model A.1.17' = interaction_m1_lag,
+  'Model A.1.18' = interaction_m2_lag,
+  'Model A.1.19' = interaction_m3_lag,
+  'Model A.1.20' = interaction_m4_lag
 )
 
 interaction_map_lag <- list(
