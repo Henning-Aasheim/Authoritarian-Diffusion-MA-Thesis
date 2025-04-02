@@ -11,6 +11,8 @@ library(sandwich)
 library(tinytable)
 library(tidyverse)
 library(WDI)
+library(knitr)
+library(kableExtra)
 
 # To disable `siunitx` and prevent `modelsummary` from wrapping numeric entries 
 # in `\num{}`, call:
@@ -501,6 +503,7 @@ base <- base %>%
                          iso3c == 'GBR' ~ 0,
                          iso3c == 'GRC' ~ 0,
                          iso3c == 'HKG' ~ 0,
+                         iso3c == 'HRV' & year > 2010 ~ 0,
                          iso3c == 'HUN' ~ 0,
                          iso3c == 'IRL' ~ 0,
                          iso3c == 'ISL' ~ 0,
@@ -567,7 +570,7 @@ if(!file.exists('data/base.RData')){
 
 datasummary(freedom + fbic + regime + west_2_fbic + gdppc_log + rents + oda ~ 
               N + Mean + Median + SD + Min + Max + Density, 
-            data = base, output = 'latex') %>% 
+            data = base) %>% 
   plot_tt(j = 8,
           fun = 'density',
           data = list(base$freedom, base$fbic,
@@ -590,3 +593,69 @@ datasummary(freedom + fbic + regime + west_2_fbic + gdppc_log + rents + oda ~
 
 # GDP_diff_2 <- base %>% 
 #   filter(year == 2023)
+
+# STATISTICS -------------------------------------------------------------------
+
+## Country list ----------------------------------------------------------------
+
+countries <- base %>% 
+  filter(!is.na(fbic)) %>% 
+  group_by(country) %>% 
+  summarise('Start year' = min(year), 'End year' = max(year))
+
+
+gdp_na <- base %>% 
+  select(country, year, gdppc) %>% 
+  filter(is.na(gdppc) & year != 2024)
+
+rent_na <- base %>% 
+  select(country, year, rents) %>% 
+  filter(is.na(rents) & !(year %in% 2022:2024))
+
+oda_na <- base %>% 
+  select(country, year, oda) %>% 
+  filter(is.na(oda) & year != 2024)
+
+west_na <- base %>% 
+  select(country, year, west_2_fbic) %>% 
+  filter(is.na(west_2_fbic) & year != 2024)
+
+
+countries <- countries %>% 
+  mutate('Missing GDP' = case_when(country == 'North Korea' ~ 2023,
+                                   country == 'Syria' ~ 2023,
+                                   country == 'Eritrea' ~ 2023,
+                                   country == 'Cuba' ~ 2023,
+                                   .default = ''),
+         'Missing rents' = case_when(country == 'Afghanistan' ~ '1994-2001',
+                                     country == 'Croatia' ~ '1994',
+                                     country == 'Cuba' ~ '2021',
+                                     country == 'Equatorial Guinea' ~ '2001-2004',
+                                     country == 'Eritrea' ~ '2012-',
+                                     country == 'Estonia' ~ '1994',
+                                     country == 'Israel' ~ '1994',
+                                     country == 'Kosovo' ~ '1999-2007',
+                                     country == 'Kuwait' ~ '2021',
+                                     country == 'Latvia' ~ '1994',
+                                     country == 'Liberia' ~ '1994-1999',
+                                     country == 'Lithuania' ~ '1994',
+                                     country == 'Moldova' ~ '1994',
+                                     country == 'Montenegro' ~ '1998-1999',
+                                     country == 'North Korea' ~ 'Not included',
+                                     country == 'Sao Tome and Principe' ~ '1994-2000',
+                                     country == 'Serbia' ~ '1994',
+                                     country == 'Slovenia' ~ '1994',
+                                     country == 'Somalia' ~ '1994-2012',
+                                     country == 'South Sudan' ~ '2016-',
+                                     country == 'Syria' ~ '2021',
+                                     country == 'Taiwan' ~ 'Not included',
+                                     country == 'Timor-Leste' ~ '1994-1999 and 2004-2014',
+                                     country == 'Turkmenistan' ~ '2020-',
+                                     country == 'Venezuela' ~ '2015-',
+                                     country == 'Yemen' ~ '1994-2001',
+                                     country == 'Afghanistan' ~ '2019-',
+                                     .default = ''),
+         'Missing aid' = case_when())
+
+kbl(countries) %>% 
+  kable_classic()
