@@ -570,7 +570,7 @@ if(!file.exists('data/base.RData')){
 
 datasummary(freedom + fbic + regime + west_2_fbic + gdppc_log + rents + oda ~ 
               N + Mean + Median + SD + Min + Max + Density, 
-            data = base) %>% 
+            data = base, ou) %>% 
   plot_tt(j = 8,
           fun = 'density',
           data = list(base$freedom, base$fbic,
@@ -622,10 +622,10 @@ west_na <- base %>%
 
 
 countries <- countries %>% 
-  mutate('Missing GDP' = case_when(country == 'North Korea' ~ 2023,
-                                   country == 'Syria' ~ 2023,
-                                   country == 'Eritrea' ~ 2023,
-                                   country == 'Cuba' ~ 2023,
+  mutate('Missing GDP' = case_when(country == 'North Korea' ~ '2023',
+                                   country == 'Syria' ~ '2023',
+                                   country == 'Eritrea' ~ '2023',
+                                   country == 'Cuba' ~ '2023',
                                    .default = ''),
          'Missing rents' = case_when(country == 'Afghanistan' ~ '1994-2001',
                                      country == 'Croatia' ~ '1994',
@@ -653,9 +653,31 @@ countries <- countries %>%
                                      country == 'Turkmenistan' ~ '2020-',
                                      country == 'Venezuela' ~ '2015-',
                                      country == 'Yemen' ~ '1994-2001',
-                                     country == 'Afghanistan' ~ '2019-',
                                      .default = ''),
-         'Missing aid' = case_when())
+         'Missing aid' = case_when(country == 'Afghanistan' ~ '2023',
+                                   country == 'Bhutan' ~ '2023',
+                                   country == 'Chile' ~ '2018',
+                                   country == 'Cuba' ~ '2023',
+                                   country == 'Eritrea' ~ '2023',
+                                   country == 'Kosovo' ~ '1999-2008',
+                                   country == 'Lebanon' ~ '2023',
+                                   country == 'Libya' ~ '2000-2004',
+                                   country == 'Moldova' ~ '1994-1996',
+                                   country == 'Montenegro' ~ '1998-2002',
+                                   country == 'North Korea' ~ '2023',
+                                   country == 'South Sudan' ~ '2023',
+                                   country == 'Syria' ~ '2023',
+                                   country == 'Venezuela' ~ '2023',
+                                   country == 'Yemen' ~ '2023',
+                                   .default = ''),
+         'Missing West' = case_when(country == 'Hong Kong' ~ '1994-1996',
+                                    country == 'Kosovo' ~ '1999-2007',
+                                    country == 'Montenegro' ~ '1998-2005',
+                                    country == 'Serbia' ~ '1994-2005',
+                                    country == 'Timor-Leste' ~ '1994-2001',
+                                    .default = ''))
 
-kbl(countries) %>% 
-  kable_classic()
+names(countries)[5] <- paste0(names(countries)[5], footnote_marker_number(1, 'latex'))
+
+kable(countries, booktabs = T, format = 'latex') %>% 
+  footnote(number = 'Natural resources rents only has data from 1994-2021, missing data indicates missing variables other than 2022-2023')
