@@ -78,7 +78,8 @@ modelsummary(fixest_models,
              stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
              coef_map = fixest_map,
              gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
-                         'adj.r.squared', 'r2.within.adjusted'))
+                         'adj.r.squared', 'r2.within.adjusted'),
+             output = 'latex')
 
 # The high R squared is a result of the fixed effects, where I control for many 
 
@@ -110,11 +111,11 @@ fixest_m4_lag <- feols(l(freedom, 5) ~ fbic + gdppc_log + rents + oda + west_2_f
 
 
 fixest_models_lag <- list(
-  'Model A.1' = fixest_m6,
-  'Model A.2' = fixest_m1_lag,
-  'Model A.3' = fixest_m2_lag,
-  'Model A.4' = fixest_m3_lag,
-  'Model A.5' = fixest_m4_lag
+  'Model A.1.1' = fixest_m6,
+  'Model A.1.2' = fixest_m1_lag,
+  'Model A.1.3' = fixest_m2_lag,
+  'Model A.1.4' = fixest_m3_lag,
+  'Model A.1.5' = fixest_m4_lag
 )
 
 fixest_map_lag <- list(
@@ -132,7 +133,8 @@ modelsummary(fixest_models_lag,
              stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
              coef_map = fixest_map,
              gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
-                         'adj.r.squared', 'r2.within.adjusted'))
+                         'adj.r.squared', 'r2.within.adjusted'),
+             output = 'latex')
 
 ## Delta -----------------------------------------------------------------------
 
@@ -197,7 +199,8 @@ modelsummary(fixest_models_delta,
              stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001),
              coef_map = fixest_map_delta,
              gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
-                         'adj.r.squared', 'r2.within.adjusted'))
+                         'adj.r.squared', 'r2.within.adjusted'),
+             output = 'latex')
 
 ## Lagged delta ----------------------------------------------------------------
 
@@ -249,7 +252,8 @@ modelsummary(fixest_models_delta_lag,
              stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001),
              coef_map = fixest_map_delta_lag,
              gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
-                         'adj.r.squared', 'r2.within.adjusted'))
+                         'adj.r.squared', 'r2.within.adjusted'),
+             output = 'latex')
 
 
 
@@ -313,7 +317,8 @@ modelsummary(interaction_models,
              stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
              coef_map = interaction_map,
              gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
-                         'adj.r.squared', 'r2.within.adjusted'))
+                         'adj.r.squared', 'r2.within.adjusted'),
+             output = 'latex')
 
 ## Lagged simple -----------------------------------------------------------------------
 
@@ -367,7 +372,8 @@ modelsummary(interaction_models_lag,
              stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
              coef_map = interaction_map_lag,
              gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
-                         'adj.r.squared', 'r2.within.adjusted'))
+                         'adj.r.squared', 'r2.within.adjusted'),
+             output = 'latex')
 
 ## Delta -----------------------------------------------------------------------
 
@@ -427,45 +433,46 @@ modelsummary(interaction_models_delta,
              stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
              coef_map = interaction_map_delta,
              gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
-                         'adj.r.squared', 'r2.within.adjusted'))
+                         'adj.r.squared', 'r2.within.adjusted'),
+             output = 'latex')
 
 
 ## Lagged delta --------------------------------------------------------
 
 
-interaction_m1_lag <- feols(l(freedom, 2) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+interaction_m1_lag_delta <- feols(l(freedom, 2) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
                                 country+ year, 
                               data     = base, 
                               cluster  = 'country', 
                               panel.id = ~country+year)
 
-interaction_m2_lag <- feols(l(freedom, 3) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+interaction_m2_lag_delta <- feols(l(freedom, 3) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
                                 country+ year, 
                               data     = base, 
                               cluster  = 'country', 
                               panel.id = ~country+year)
 
-interaction_m3_lag <- feols(l(freedom, 4) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+interaction_m3_lag_delta <- feols(l(freedom, 4) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
                                 country+ year, 
                               data     = base, 
                               cluster  = 'country', 
                               panel.id = ~country+year)
 
-interaction_m4_lag <- feols(l(freedom, 5) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+interaction_m4_lag_delta <- feols(l(freedom, 5) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
                                 country+ year, 
                               data     = base, 
                               cluster  = 'country', 
                               panel.id = ~country+year)
 
-interaction_models_lag <- list(
+interaction_models_lag_delta <- list(
   'Model A.1.16' = interaction_m5_delta,
-  'Model A.1.17' = interaction_m1_lag,
-  'Model A.1.18' = interaction_m2_lag,
-  'Model A.1.19' = interaction_m3_lag,
-  'Model A.1.20' = interaction_m4_lag
+  'Model A.1.17' = interaction_m1_lag_delta,
+  'Model A.1.18' = interaction_m2_lag_delta,
+  'Model A.1.19' = interaction_m3_lag_delta,
+  'Model A.1.20' = interaction_m4_lag_delta
 )
 
-interaction_map_lag <- list(
+interaction_map_lag_delta <- list(
   'delta_fbic'                 = 'Linkages to China',
   'factor(regime)1'            = 'Electoral autocracy',
   'factor(regime)2'            = 'Electoral democracy',
@@ -479,8 +486,9 @@ interaction_map_lag <- list(
   'west_2_fbic'                = 'Linkages (West)'
 )
 
-modelsummary(interaction_models_lag, 
+modelsummary(interaction_models_lag_delta, 
              stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
-             coef_map = interaction_map_lag,
+             coef_map = interaction_map_lag_delta,
              gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
-                         'adj.r.squared', 'r2.within.adjusted'))
+                         'adj.r.squared', 'r2.within.adjusted'),
+             output = 'latex')
