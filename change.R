@@ -25,46 +25,46 @@ base <- base %>%
 
 ## Delta 1-5 -------------------------------------------------------------------
 
-robust_m6_delta_1 <- feols(f(freedom, 1) ~ delta_fbic_1 + gdppc_log + rents + oda + west_2_fbic + factor(regime) | 
+change_h1_m1 <- feols(f(freedom, 1) ~ delta_fbic_1 + gdppc_log + rents + oda + west_2_fbic + factor(regime) | 
                              country + year, 
                            data     = base,
                            cluster  = 'country', 
                            panel.id = ~country+year)
 
-robust_m6_delta_2 <- feols(f(freedom, 1) ~ delta_fbic_2 + gdppc_log + rents + oda + west_2_fbic + factor(regime) | 
+change_h1_m2 <- feols(f(freedom, 1) ~ delta_fbic_2 + gdppc_log + rents + oda + west_2_fbic + factor(regime) | 
                              country + year, 
                            data     = base,
                            cluster  = 'country', 
                            panel.id = ~country+year)
 
-robust_m6_delta_3 <- feols(f(freedom, 1) ~ delta_fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) |
+change_h1_m3 <- feols(f(freedom, 1) ~ delta_fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) |
                              country + year, 
                            data     = base,
                            cluster  = 'country', 
                            panel.id = ~country+year)
 
-robust_m6_delta_4 <- feols(f(freedom, 1) ~ delta_fbic_4 + gdppc_log + rents + oda + west_2_fbic + factor(regime) |
+change_h1_m4 <- feols(f(freedom, 1) ~ delta_fbic_4 + gdppc_log + rents + oda + west_2_fbic + factor(regime) |
                              country + year, 
                            data     = base, 
                            cluster  = 'country', 
                            panel.id = ~country+year)
 
-robust_m6_delta_5 <- feols(f(freedom, 1) ~ delta_fbic_5 + gdppc_log + rents + oda + west_2_fbic + factor(regime) |
+change_h1_m5 <- feols(f(freedom, 1) ~ delta_fbic_5 + gdppc_log + rents + oda + west_2_fbic + factor(regime) |
                              country + year, 
                            data     = base, 
                            cluster  = 'country', 
                            panel.id = ~country+year)
 
 
-robust_models_delta <- list(
-  'Model A.3.1' = robust_m6_delta_1,
-  'Model A.3.2' = robust_m6_delta_2,
-  'Model A.3.3' = robust_m6_delta_3,
-  'Model A.3.4' = robust_m6_delta_4,
-  'Model A.3.5' = robust_m6_delta_5
+change_h1 <- list(
+  'Model A.3.1' = change_h1_m1,
+  'Model A.3.2' = change_h1_m2,
+  'Model A.3.3' = change_h1_m3,
+  'Model A.3.4' = change_h1_m4,
+  'Model A.3.5' = change_h1_m5
 )
 
-robust_map_delta <- list(
+change_h1_map <- list(
   'delta_fbic_1'    = 'Linkages to China',
   'delta_fbic_2'    = 'Linkages to China',
   'delta_fbic'      = 'Linkages to China',
@@ -96,45 +96,45 @@ modelsummary(robust_models_delta,
 
 ## Delta 1-5 interaction -------------------------------------------------------
 
-robust_m5_delta_1 <- feols(f(freedom, 1) ~ delta_fbic_1*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+change_h2_m1 <- feols(f(freedom, 1) ~ delta_fbic_1*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
                              country+ year, 
                            data     = base, 
                            cluster  = 'country', 
                            panel.id = ~country+year)
 
-robust_m5_delta_2 <- feols(f(freedom, 1) ~ delta_fbic_2*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+change_h2_m2 <- feols(f(freedom, 1) ~ delta_fbic_2*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
                              country+ year, 
                            data     = base, 
                            cluster  = 'country', 
                            panel.id = ~country+year)
 
-robust_m5_delta_3 <- feols(f(freedom, 1) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+change_h2_m3 <- feols(f(freedom, 1) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
                              country+ year, 
                            data     = base, 
                            cluster  = 'country', 
                            panel.id = ~country+year)
 
-robust_m5_delta_4 <- feols(f(freedom, 1) ~ delta_fbic_4*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+change_h2_m4 <- feols(f(freedom, 1) ~ delta_fbic_4*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
                              country+ year, 
                            data     = base, 
                            cluster  = 'country', 
                            panel.id = ~country+year)
 
-robust_m5_delta_5 <- feols(f(freedom, 1) ~ delta_fbic_5*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+change_h2_m5 <- feols(f(freedom, 1) ~ delta_fbic_5*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
                              country+ year, 
                            data     = base, 
                            cluster  = 'country', 
                            panel.id = ~country+year)
 
-robust_interaction_delta <- list(
-  'Model A.3.6'  = robust_m5_delta_1,
-  'Model A.3.7'  = robust_m5_delta_2,
-  'Model A.3.8'  = robust_m5_delta_3,
-  'Model A.3.9'  = robust_m5_delta_4,
-  'Model A.3.10' = robust_m5_delta_5
+change_h2 <- list(
+  'Model A.3.6'  = change_h2_m1,
+  'Model A.3.7'  = change_h2_m2,
+  'Model A.3.8'  = change_h2_m3,
+  'Model A.3.9'  = change_h2_m4,
+  'Model A.3.10' = change_h2_m5
 )
 
-robust_interaction_delta_map <- list(
+change_h2_map <- list(
   'delta_fbic_1'                 = 'Linkages to China',
   'delta_fbic_2'                 = 'Linkages to China',
   'delta_fbic'                   = 'Linkages to China',
@@ -164,15 +164,17 @@ robust_interaction_delta_map <- list(
   'west_2_fbic'                  = 'Linkages (West)'
 )
 
-modelsummary(robust_interaction_delta, 
+modelsummary(change_h2, 
              stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
-             coef_map = robust_interaction_delta_map,
+             coef_map = change_h2_map,
              gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
                          'adj.r.squared', 'r2.within.adjusted'))
 
-modelsummary(robust_interaction_delta, 
+modelsummary(change_h2, 
              stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
-             coef_map = robust_interaction_delta_map,
+             coef_map = change_h2_map,
              gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
                          'adj.r.squared', 'r2.within.adjusted'),
              output = 'latex')
+
+
