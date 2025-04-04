@@ -150,7 +150,7 @@ modelsummary(fixest_h1_delta,
              gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
                          'adj.r.squared', 'r2.within.adjusted'))
 
-modelsummary(fixest_models_delta, 
+modelsummary(fixest_h1_delta, 
              stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001),
              coef_map = fixest_h1_delta_map,
              gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
@@ -222,7 +222,7 @@ modelsummary(fixest_h2,
              gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
                          'adj.r.squared', 'r2.within.adjusted'))
 
-modelsummary(fixest_h2_models, 
+modelsummary(fixest_h2, 
              stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
              coef_map = fixest_h2_map,
              gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
