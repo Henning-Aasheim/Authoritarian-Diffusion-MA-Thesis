@@ -2,6 +2,7 @@
 
 library(fixest)       # Runs fixed-effects
 library(modelsummary) # Outputs regression tables
+library(tidyverse)    # For creating delta_bandwidth
 
 # To disable `siunitx` and prevent `modelsummary` from wrapping numeric entries 
 # in `\num{}`, call:
@@ -9,6 +10,9 @@ library(modelsummary) # Outputs regression tables
 options("modelsummary_format_numeric_latex" = "plain")
 
 load('data/base.RData')
+
+base <- base %>% 
+  mutate(delta_bandwidth = bandwidth - lag(bandwidth, n = 3))
 
 # HYPOTHESIS 1 -----------------------------------------------------------------
 
@@ -57,7 +61,7 @@ bandwidth_h1 <- list(
   'Model A.4.3' = bandwidth_h1_m3,
   'Model A.4.4' = bandwidth_h1_m4,
   'Model A.4.5' = bandwidth_h1_m5,
-  'Model A.4.6' = bandwidth_m6
+  'Model A.4.6' = bandwidth_h1_m6
 )
 
 bandwidth_h1_map <- list(
@@ -359,7 +363,7 @@ modelsummary(bandwidth_h1_lag,
 
 modelsummary(bandwidth_h1_lag, 
              stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
-             coef_map = bandwidth_h1_lagmap,
+             coef_map = bandwidth_h1_lag_map,
              gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
                          'adj.r.squared', 'r2.within.adjusted'),
              output = 'latex')
