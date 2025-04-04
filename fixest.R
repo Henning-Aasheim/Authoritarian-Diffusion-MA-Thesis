@@ -75,6 +75,13 @@ modelsummary(fixest_models,
              gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
                          'adj.r.squared', 'r2.within.adjusted'))
 
+modelsummary(fixest_models, 
+             stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
+             coef_map = fixest_map,
+             gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
+                         'adj.r.squared', 'r2.within.adjusted'),
+             output = 'latex')
+
 # The high R squared is a result of the fixed effects, where I control for many 
 
 
