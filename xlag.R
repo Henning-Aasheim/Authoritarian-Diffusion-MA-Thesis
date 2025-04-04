@@ -74,9 +74,15 @@ xlag_h1_map <- list(
   'factor(regime)3' = 'Liberal democracy'
 )
 
-modelsummary(robust_models, 
+modelsummary(xlag_h1, 
              stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
-             coef_map = robust_map,
+             coef_map = xlag_h1_map,
+             gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
+                         'adj.r.squared', 'r2.within.adjusted'))
+
+modelsummary(xlag_h1, 
+             stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
+             coef_map = xlag_h1_map,
              gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
                          'adj.r.squared', 'r2.within.adjusted'),
              output = 'latex')
