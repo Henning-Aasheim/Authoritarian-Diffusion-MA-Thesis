@@ -536,7 +536,8 @@ base <- base %>%
                          iso3c == 'UKR' & year < 2005 ~ 0,
                          iso3c == 'URY' & year > 2017 ~ 0,
                          iso3c == 'USA' ~ 0,
-                         .default = as.numeric(oda)))
+                         .default = as.numeric(oda))) %>% 
+  mutate(delta_fbic = fbic - lag(fbic, n = 3))
 
 # Sets attributes to dataframe
 
@@ -554,6 +555,7 @@ attr(base$west_2_fbic,            'label') <- 'FBIC index total score from the \
 attr(base$west_2_bandwidth,       'label') <- 'FBIC bandwidth total score from the \'West\' (expanded)'
 attr(base$oda,                    'label') <- 'Official Development Assistance [ODA] (% of GNI)'
 attr(base$consolidated_democracy, 'label') <- 'EDI-score of >= 0.8 for 15 consecutive year'
+attr(base$delta_fbic,             'label') <- '3-year change in linkages to China (FBIC)'
 
 # Removes datasets to keep the environment tidy
 
@@ -570,7 +572,7 @@ if(!file.exists('data/base.RData')){
 
 datasummary(freedom + fbic + regime + west_2_fbic + gdppc_log + rents + oda ~ 
               N + Mean + Median + SD + Min + Max + Density, 
-            data = base, ou) %>% 
+            data = base) %>% 
   plot_tt(j = 8,
           fun = 'density',
           data = list(base$freedom, base$fbic,
