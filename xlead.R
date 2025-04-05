@@ -151,6 +151,12 @@ modelsummary(xlead_h1_delta,
              stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001),
              coef_map = xlead_h1_delta_map,
              gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
+                         'adj.r.squared', 'r2.within.adjusted'))
+
+modelsummary(xlead_h1_delta, 
+             stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001),
+             coef_map = xlead_h1_delta_map,
+             gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
                          'adj.r.squared', 'r2.within.adjusted'),
              output = 'latex')
 
@@ -211,6 +217,12 @@ xlead_h2_map <- list(
   'oda'                  = 'Aid',
   'west_2_fbic'          = 'Linkages (West)'
 )
+
+modelsummary(xlead_h2, 
+             stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
+             coef_map = xlead_h2_map,
+             gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
+                         'adj.r.squared', 'r2.within.adjusted'))
 
 modelsummary(xlead_h2, 
              stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
@@ -279,9 +291,11 @@ modelsummary(xlead_h2_delta,
              stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001),
              coef_map = xlead_h2_delta_map,
              gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
+                         'adj.r.squared', 'r2.within.adjusted'))
+
+modelsummary(xlead_h2_delta, 
+             stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001),
+             coef_map = xlead_h2_delta_map,
+             gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
                          'adj.r.squared', 'r2.within.adjusted'),
              output = 'latex')
-
-
-
-

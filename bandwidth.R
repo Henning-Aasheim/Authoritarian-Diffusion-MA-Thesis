@@ -89,7 +89,7 @@ modelsummary(bandwidth_h1,
              output = 'latex')
 
 
-### Delta ----------------------------------------------------------------------
+## Delta -----------------------------------------------------------------------
 
 bandwidth_h1_m1_delta <- feols(f(freedom, 1) ~ delta_bandwidth | 
                               country + year, 
