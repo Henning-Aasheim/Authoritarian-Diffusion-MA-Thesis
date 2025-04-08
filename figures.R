@@ -59,7 +59,7 @@ diffs %>%
                 label.r = unit(0, 'pt'), 
                 inherit.aes = F) +
   geom_line(linewidth = 1.2) +
-  scale_x_continuous(breaks = seq(1780, 2030, 20)) +
+  scale_x_continuous(breaks = seq(1780, 2030, 10)) +
   scale_y_continuous(breaks = seq(0, 1, .1), labels = function(x) paste0(x*100, '%')) +
   scale_colour_manual(labels = c('Less', 'Greater'), values = c('#003f5c','#ff9214')) +
   labs(x = 'Year',
@@ -70,10 +70,11 @@ diffs %>%
   theme(legend.position = 'bottom',
         axis.title = element_text(size = 15, face = 'bold'),
         legend.title = element_text(size = 15, face = 'bold'),
-        axis.text = element_text(size = 13),
-        legend.text = element_text(size = 13))
+        axis.text = element_text(size = 15),
+        legend.text = element_text(size = 15),
+        plot.margin = margin(t = 20, r = 20, b = 20, l = 20, unit = 'pt'))
 
-#ggsave('illustrations/waves.jpeg', dpi = 300, units = 'cm', width = 18, height = 14)
+ggsave('illustrations/waves.jpeg', dpi = 300, units = 'px', width = 2700, height = 2000)
 
 # FIRST TEST WAVES -------------------------------------------------------------
 

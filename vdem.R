@@ -364,7 +364,7 @@ declining_indicators_3 %>%
                      breaks = seq(0, 46, 4)) +
   scale_fill_manual(values = c('#ffd1ac', '#ff9214', 
                                '#5b758b', '#003f5c', 'grey80')) +
-  labs(x    = 'Number of declining indicators',
+  labs(x    = 'Number of declining countries',
        y    = NULL,
        fill = 'Type:') +
   guides(fill = guide_legend(nrow = 2)) +
@@ -379,9 +379,9 @@ declining_indicators_3 %>%
         panel.grid.major.x = element_line(),
         panel.grid.minor.x = element_line(linetype = 'dashed'))
 
-## Declining indicators 2013-2023 ----------------------------------------------
+## Declining indicators 2014-2024 ----------------------------------------------
 
-# Top 20 declining indicator (V_DEM: Nord et al. 2024)
+# Top 20 declining indicator (V_DEM: Nord et al. 2025)
 
 declining_indicators_4 <- data.frame(
   indicator = c('Government censorship effort (Media)', 
@@ -426,7 +426,7 @@ declining_indicators_4 %>%
   scale_x_continuous(expand = expansion(mult = 0),
                      breaks = seq(0, 46, 4)) +
   scale_fill_manual(values = c('#444e86', '#ff6e54', '#ff9214', '#003f5c', '#dd5182', '#955196')) +
-  labs(x    = 'Number of declining indicators',
+  labs(x    = 'Number of declining countries',
        y    = NULL,
        fill = 'Type:') +
   guides(fill = guide_legend(nrow = 2)) +
@@ -439,5 +439,8 @@ declining_indicators_4 %>%
         axis.text = element_text(size = 15),
         legend.text = element_text(size = 15),
         panel.grid.major.x = element_line(),
-        panel.grid.minor.x = element_line(linetype = 'dashed'))
+        panel.grid.minor.x = element_line(linetype = 'dashed'),
+        plot.margin = margin(t = 20, r = 20, b = 20, l = 20, unit = 'pt'))
+
+ggsave('illustrations/declining_indicators.jpeg', units = 'px', width = 2700, height = 2000, dpi = 300)
   

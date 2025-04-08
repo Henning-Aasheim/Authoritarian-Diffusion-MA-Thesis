@@ -233,12 +233,13 @@ infl_change_west_1 <- infl_by_west_1 %>%
   filter(year %in% c(1994, 2023)) %>% 
   group_by(iso3c) %>% 
   summarise(west_1 = diff(west_1)) %>% 
-  mutate(fbic_nom = case_when(west_1 >=  .3                   ~ 'Very strong positive change',
-                              west_1  <  .3  & west_1 >= .2   ~ 'Strong positive change',
-                              west_1  <  .2  & west_1 >= .05  ~ 'Positive change',
+  mutate(fbic_nom = case_when(west_1 >=  .25                   ~ 'Very strong positive change',
+                              west_1  <  .25  & west_1 >= .15   ~ 'Strong positive change',
+                              west_1  <  .15  & west_1 >= .05  ~ 'Positive change',
                               west_1  < .05  & west_1 >= -.05 ~ 'No or small change',
-                              west_1  < -.05 & west_1 > -.2   ~ 'Negative Change',
-                              west_1 <= -.2                   ~ 'Strong negative change'))
+                              west_1  < -.05 & west_1 >= -.15  ~ 'Negative change',
+                              west_1  < -.15  & west_1 >= -.25  ~ 'Strong negative change',
+                              west_1 <= -.25                   ~ 'Very strong negative change'))
 
 ## Change in Western influence data (Expanded) ---------------------------------
 
@@ -248,12 +249,13 @@ infl_change_west_2 <- infl_by_west_2 %>%
   filter(year %in% c(1994, 2023)) %>% 
   group_by(iso3c) %>% 
   summarise(west_2 = diff(west_2)) %>% 
-  mutate(fbic_nom = case_when(west_2 >=  .3                   ~ 'Very strong positive change',
-                              west_2  <  .3  & west_2 >= .2   ~ 'Strong positive change',
-                              west_2  <  .2  & west_2 >= .05  ~ 'Positive change',
+  mutate(fbic_nom = case_when(west_2 >=  .25                   ~ 'Very strong positive change',
+                              west_2  <  .25  & west_2 >= .15   ~ 'Strong positive change',
+                              west_2  <  .15  & west_2 >= .05  ~ 'Positive change',
                               west_2  < .05  & west_2 >= -.05 ~ 'No or small change',
-                              west_2  < -.05 & west_2 > -.2   ~ 'Negative Change',
-                              west_2 <= -.2                   ~ 'Strong negative change'))
+                              west_2  < -.05 & west_2 >= -.15  ~ 'Negative change',
+                              west_2  < -.15  & west_2 >= -.25  ~ 'Strong negative change',
+                              west_2 <= -.25                   ~ 'Very strong negative change'))
 
 ## World map data --------------------------------------------------------------
 
@@ -454,6 +456,7 @@ map_base_change_west_2 %>%
   geom_polygon(aes(fill = fbic_nom), colour = 'black') +
   scale_fill_manual(values = palette_chn, breaks = breaks_chn) +
   labs(fill = 'Western influence:') +
+  guides(fill = guide_legend(nrow = 3)) +
   theme_void(base_family = 'serif') +
   theme(legend.position = 'bottom',
         legend.title = element_text(margin = margin(b = 18, r = 10, unit = 'pt'),

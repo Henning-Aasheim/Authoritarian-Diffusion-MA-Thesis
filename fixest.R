@@ -298,5 +298,72 @@ modelsummary(fixest_h2_delta,
                          'adj.r.squared', 'r2.within.adjusted'),
              output = 'latex')
 
+# RESIDUALS --------------------------------------------------------------------
+
+## H1 --------------------------------------------------------------------------
+
+plot(fitted(fixest_h1_m1), resid(fixest_h1_m1))
+
+plot(fitted(fixest_h1_m2), resid(fixest_h1_m2))
+
+plot(fitted(fixest_h1_m3), resid(fixest_h1_m3))
+
+plot(fitted(fixest_h1_m4), resid(fixest_h1_m4))
+
+plot(fitted(fixest_h1_m5), resid(fixest_h1_m5))
+
+plot(fitted(fixest_h1_m6), resid(fixest_h1_m6))
 
 
+## H1 delta --------------------------------------------------------------------
+
+plot(fitted(fixest_h1_m1_delta), resid(fixest_h1_m1_delta))
+
+plot(fitted(fixest_h1_m2_delta), resid(fixest_h1_m2_delta))
+
+plot(fitted(fixest_h1_m3_delta), resid(fixest_h1_m3_delta))
+
+plot(fitted(fixest_h1_m4_delta), resid(fixest_h1_m4_delta))
+
+plot(fitted(fixest_h1_m5_delta), resid(fixest_h1_m5_delta))
+
+plot(fitted(fixest_h1_m6_delta), resid(fixest_h1_m6_delta))
+
+## H2 --------------------------------------------------------------------------
+
+plot(fitted(fixest_h2_m1), resid(fixest_h2_m1))
+
+plot(fitted(fixest_h2_m2), resid(fixest_h2_m2))
+
+plot(fitted(fixest_h2_m3), resid(fixest_h2_m3))
+
+plot(fitted(fixest_h2_m4), resid(fixest_h2_m4))
+
+plot(fitted(fixest_h2_m5), resid(fixest_h2_m5))
+
+## H2 delta --------------------------------------------------------------------
+
+plot(fitted(fixest_h2_m1_delta), resid(fixest_h2_m1_delta))
+
+plot(fitted(fixest_h2_m2_delta), resid(fixest_h2_m2_delta))
+
+plot(fitted(fixest_h2_m3_delta), resid(fixest_h2_m3_delta))
+
+plot(fitted(fixest_h2_m4_delta), resid(fixest_h2_m4_delta))
+
+plot(fitted(fixest_h2_m5_delta), resid(fixest_h2_m5_delta))
+
+# PLOT -------------------------------------------------------------------------
+
+## H1 --------------------------------------------------------------------------
+
+library(broom)
+
+a <- tidy(fixest_h2_m5_delta, conf.level = .95, conf.int = T)
+
+a %>% 
+  ggplot(aes(x = estimate, y = term)) +
+  geom_point(size = 3) +
+  geom_errorbarh(aes(xmin = conf.low, xmax = conf.high), height = .2) +
+  geom_vline(xintercept = 0) +
+  theme_classic()
