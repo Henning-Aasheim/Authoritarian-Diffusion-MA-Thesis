@@ -353,6 +353,37 @@ plot(fitted(fixest_h2_m4_delta), resid(fixest_h2_m4_delta))
 
 plot(fitted(fixest_h2_m5_delta), resid(fixest_h2_m5_delta))
 
+# OUTLIERS ---------------------------------------------------------------------
+
+library(ggrepel)
+
+
+base$residuals <- residuals(fixest_h2_m5_delta, na.rm = F)
+base$fit <- fitted(fixest_h2_m5_delta, na.rm = F)
+
+base %>% 
+  ggplot(aes(x = fit, y = residuals)) +
+  geom_point(alpha = .3) +
+  geom_point(data = base %>% filter(residuals > .42 | residuals < -.45), 
+             aes(colour = country), size = 3) +
+  geom_text_repel(data = base %>% filter(residuals > .42 | residuals < -.45),
+            aes(label = paste0(country, ' ',year), colour = country, family = 'serif'),
+            show.legend = F, size = 5) +
+  geom_hline(yintercept = 0) +
+  scale_x_continuous(breaks = seq(0, 1, .2)) +
+  scale_y_continuous(breaks = seq(-.5, .5, .1)) +
+  scale_colour_manual(values = c('#ff6e54', '#ff9214', '#003f5c', '#dd5182', '#955196')) +
+  labs(x = 'Fit',
+       y = 'Residuals',
+       colour = 'Country:') +
+  theme_classic(base_family = 'serif') +
+  theme(legend.position = 'bottom',
+        axis.title = element_text(size = 15, face = 'bold'),
+        legend.title = element_text(size = 15, face = 'bold'),
+        axis.text = element_text(size = 15),
+        legend.text = element_text(size = 15),
+        plot.margin = margin(t = 20, r = 20, b = 20, l = 20, unit = 'pt'))
+
 # PLOT -------------------------------------------------------------------------
 
 ## H1 --------------------------------------------------------------------------
@@ -367,3 +398,4 @@ a %>%
   geom_errorbarh(aes(xmin = conf.low, xmax = conf.high), height = .2) +
   geom_vline(xintercept = 0) +
   theme_classic()
+

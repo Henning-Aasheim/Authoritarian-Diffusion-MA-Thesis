@@ -570,15 +570,13 @@ if(!file.exists('data/base.RData')){
 
 ## Summary ---------------------------------------------------------------------
 
-datasummary(freedom + fbic + regime + west_2_fbic + gdppc_log + rents + oda ~ 
+datasummary(freedom + fbic + delta_fbic + regime + west_2_fbic + gdppc_log + rents + oda ~ 
               N + Mean + Median + SD + Min + Max + Density, 
             data = base) %>% 
   plot_tt(j = 8,
           fun = 'density',
-          data = list(base$freedom, base$fbic,
-                      base$regime, base$west_2_fbic, 
-                      base$gdppc_log, base$rents, 
-                      base$oda),
+          data = list(base$freedom, base$fbic, base$delta_fbic, base$regime, 
+                      base$west_2_fbic, base$gdppc_log, base$rents, base$oda),
           color = '#ff9214')
 
 # Checks which country has the largest difference in GDP per capita for the
