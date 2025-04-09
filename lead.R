@@ -14,36 +14,35 @@ load('data/base.RData')
 
 ## Lagged simple ---------------------------------------------------------------
 
-lead_h1_m1 <- feols(f(freedom, 1) ~ fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | 
+lead_h1_m1 <- feols(f(freedom, 2) ~ fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | 
                      country + year, 
                    data     = base, 
                    cluster  = 'country', 
                    panel.id = ~country+year)
 
-lead_h1_m2 <- feols(f(freedom, 2) ~ fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | 
+lead_h1_m2 <- feols(f(freedom, 4) ~ fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | 
                          country + year, 
                        data     = base, 
                        cluster  = 'country', 
                        panel.id = ~country+year)
 
-lead_h1_m3 <- feols(f(freedom, 3) ~ fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | 
+lead_h1_m3 <- feols(f(freedom, 6) ~ fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | 
                          country + year, 
                        data     = base, 
                        cluster  = 'country', 
                        panel.id = ~country+year)
 
-lead_h1_m4 <- feols(f(freedom, 4) ~ fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | 
+lead_h1_m4 <- feols(f(freedom, 8) ~ fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | 
                          country + year, 
                        data     = base, 
                        cluster  = 'country', 
                        panel.id = ~country+year)
 
-lead_h1_m5 <- feols(f(freedom, 5) ~ fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | 
+lead_h1_m5 <- feols(f(freedom, 10) ~ fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | 
                          country + year, 
                        data     = base, 
                        cluster  = 'country', 
                        panel.id = ~country+year)
-
 
 lead_h1 <- list(
   'Model A.1.1' = lead_h1_m1,
@@ -79,31 +78,31 @@ modelsummary(lead_h1,
 
 ## Lagged delta ----------------------------------------------------------------
 
-lead_h1_m1_delta <- feols(f(freedom, 1) ~ delta_fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) |
+lead_h1_m1_delta <- feols(f(freedom, 2) ~ delta_fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) |
                            country + year, 
                          data     = base, 
                          cluster  = 'country',
                          panel.id = ~country+year)
 
-lead_h1_m2_delta <- feols(f(freedom, 2) ~ delta_fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | 
+lead_h1_m2_delta <- feols(f(freedom, 4) ~ delta_fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) | 
                              country + year, 
                            data     = base,
                            cluster  = 'country', 
                            panel.id = ~country+year)
 
-lead_h1_m3_delta <- feols(f(freedom, 3) ~ delta_fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) |
+lead_h1_m3_delta <- feols(f(freedom, 6) ~ delta_fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) |
                              country + year, 
                            data     = base,
                            cluster  = 'country', 
                            panel.id = ~country+year)
 
-lead_h1_m4_delta <- feols(f(freedom, 4) ~ delta_fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) |
+lead_h1_m4_delta <- feols(f(freedom, 8) ~ delta_fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) |
                              country + year, 
                            data     = base, 
                            cluster  = 'country', 
                            panel.id = ~country+year)
 
-lead_h1_m5_delta <- feols(f(freedom, 5) ~ delta_fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) |
+lead_h1_m5_delta <- feols(f(freedom, 10) ~ delta_fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) |
                              country + year, 
                            data     = base, 
                            cluster  = 'country', 
@@ -145,31 +144,31 @@ modelsummary(lead_h1_delta,
 
 ## Lagged simple ---------------------------------------------------------------
 
-lead_h2_m1 <- feols(f(freedom, 1) ~ fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+lead_h2_m1 <- feols(f(freedom, 2) ~ fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
                           country+ year, 
                         data     = base, 
                         cluster  = 'country', 
                         panel.id = ~country+year)
 
-lead_h2_m2 <- feols(f(freedom, 2) ~ fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+lead_h2_m2 <- feols(f(freedom, 4) ~ fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
                               country+ year, 
                             data     = base, 
                             cluster  = 'country', 
                             panel.id = ~country+year)
 
-lead_h2_m3 <- feols(f(freedom, 3) ~ fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+lead_h2_m3 <- feols(f(freedom, 6) ~ fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
                               country+ year, 
                             data     = base, 
                             cluster  = 'country', 
                             panel.id = ~country+year)
 
-lead_h2_m4 <- feols(f(freedom, 4) ~ fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+lead_h2_m4 <- feols(f(freedom, 8) ~ fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
                               country+ year, 
                             data     = base, 
                             cluster  = 'country', 
                             panel.id = ~country+year)
 
-lead_h2_m5 <- feols(f(freedom, 5) ~ fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+lead_h2_m5 <- feols(f(freedom, 10) ~ fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
                               country+ year, 
                             data     = base, 
                             cluster  = 'country', 
@@ -213,31 +212,31 @@ modelsummary(lead_h2,
 ## Lagged delta --------------------------------------------------------
 
 
-lead_h2_m1_delta <- feols(f(freedom, 1) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+lead_h2_m1_delta <- feols(f(freedom, 2) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
                                 country+ year, 
                               data     = base, 
                               cluster  = 'country', 
                               panel.id = ~country+year)
 
-lead_h2_m2_delta <- feols(f(freedom, 2) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+lead_h2_m2_delta <- feols(f(freedom, 4) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
                                     country+ year, 
                                   data     = base, 
                                   cluster  = 'country', 
                                   panel.id = ~country+year)
 
-lead_h2_m3_delta <- feols(f(freedom, 3) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+lead_h2_m3_delta <- feols(f(freedom, 6) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
                                     country+ year, 
                                   data     = base, 
                                   cluster  = 'country', 
                                   panel.id = ~country+year)
 
-lead_h2_m4_delta <- feols(f(freedom, 4) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+lead_h2_m4_delta <- feols(f(freedom, 8) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
                                     country+ year, 
                                   data     = base, 
                                   cluster  = 'country', 
                                   panel.id = ~country+year)
 
-lead_h2_m5_delta <- feols(f(freedom, 5) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+lead_h2_m5_delta <- feols(f(freedom, 10) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
                                     country+ year, 
                                   data     = base, 
                                   cluster  = 'country', 
