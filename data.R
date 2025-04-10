@@ -572,7 +572,7 @@ if(!file.exists('data/base.RData')){
 
 datasummary(freedom + fbic + delta_fbic + regime + west_2_fbic + gdppc_log + rents + oda ~ 
               N + Mean + Median + SD + Min + Max + Density, 
-            data = base) %>% 
+            data = base, output = 'latex') %>% 
   plot_tt(j = 8,
           fun = 'density',
           data = list(base$freedom, base$fbic, base$delta_fbic, base$regime, 
