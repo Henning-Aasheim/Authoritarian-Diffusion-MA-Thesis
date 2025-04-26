@@ -86,39 +86,111 @@ modelsummary(fixest_h1,
 
 # The high R squared is a result of the fixed effects, where I control for many 
 
+## lagged controls -------------------------------------------------------------
+
+fixest_h1_m7 <- feols(f(freedom, 1) ~ fbic | 
+                        country + year, 
+                      data     = base, 
+                      cluster  = 'country', 
+                      panel.id = ~country+year)
+
+fixest_h1_m8 <- feols(f(freedom, 1) ~ fbic + l(gdppc_log, 1) | 
+                        country + year, 
+                      data     = base, 
+                      cluster  = 'country', 
+                      panel.id = ~country+year)
+
+fixest_h1_m9 <- feols(f(freedom, 1) ~ fbic + l(gdppc_log, 1) + l(rents, 1) |
+                        country + year, 
+                      data     = base, 
+                      cluster  = 'country', 
+                      panel.id = ~country+year)
+
+fixest_h1_m10 <- feols(f(freedom, 1) ~ fbic + l(gdppc_log, 1) + l(rents, 1) + l(oda, 1) | 
+                        country + year, 
+                      data     = base, 
+                      cluster  = 'country', 
+                      panel.id = ~country+year)
+
+fixest_h1_m11 <- feols(f(freedom, 1) ~ fbic + l(gdppc_log, 1) + l(rents, 1) + l(oda, 1) + l(west_2_fbic, 1) | 
+                        country+ year, 
+                      data     = base, 
+                      cluster  = 'country', 
+                      panel.id = ~country+year)
+
+fixest_h1_m12 <- feols(f(freedom, 1) ~ fbic + l(gdppc_log, 1) + l(rents, 1) + l(oda, 1) + l(west_2_fbic, 1) + l(factor(regime), 1) | 
+                        country + year, 
+                      data     = base, 
+                      cluster  = 'country', 
+                      panel.id = ~country+year)
+
+
+fixest_h1_lc <- list(
+  'Model 1.1' = fixest_h1_m7,
+  'Model 1.2' = fixest_h1_m8,
+  'Model 1.3' = fixest_h1_m9,
+  'Model 1.4' = fixest_h1_m10,
+  'Model 1.5' = fixest_h1_m11,
+  'Model 1.6' = fixest_h1_m12
+)
+
+fixest_h1_lc_map <- list(
+  'fbic'                  = 'Linkages to China',
+  'l(gdppc_log, 1)'       = 'log(GDP per capita)',
+  'l(rents, 1)'           = 'Resource rents',
+  'l(oda, 1)'             = 'Aid',
+  'l(west_2_fbic, 1)'     = 'Linkages (West)',
+  'l(factor(regime), 1)1' = 'Electoral autocracy',
+  'l(factor(regime), 1)2' = 'Electoral democracy',
+  'l(factor(regime), 1)3' = 'Liberal democracy'
+)
+
+modelsummary(fixest_h1, 
+             stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
+             coef_map = fixest_h1_map,
+             gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
+                         'adj.r.squared', 'r2.within.adjusted'))
+
+modelsummary(fixest_h1, 
+             stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
+             coef_map = fixest_h1_map,
+             gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
+                         'adj.r.squared', 'r2.within.adjusted'),
+             output = 'latex')
+
 # HYPOTHESIS 2 -----------------------------------------------------------------
 
 ## Simple ----------------------------------------------------------------------
 
 fixest_h2_m1 <- feols(f(freedom, 1) ~ fbic*factor(regime) | 
-                          country + year, 
-                        data     = base, 
-                        cluster  = 'country', 
-                        panel.id = ~country+year)
+                        country + year, 
+                      data     = base, 
+                      cluster  = 'country', 
+                      panel.id = ~country+year)
 
 fixest_h2_m2 <- feols(f(freedom, 1) ~ fbic*factor(regime) + gdppc_log |
-                          country + year, 
-                        data     = base, 
-                        cluster  = 'country', 
-                        panel.id = ~country+year)
+                        country + year, 
+                      data     = base, 
+                      cluster  = 'country', 
+                      panel.id = ~country+year)
 
 fixest_h2_m3 <- feols(f(freedom, 1) ~ fbic*factor(regime) + gdppc_log + rents | 
-                          country + year, 
-                        data     = base, 
-                        cluster  = 'country', 
-                        panel.id = ~country+year)
+                        country + year, 
+                      data     = base, 
+                      cluster  = 'country', 
+                      panel.id = ~country+year)
 
 fixest_h2_m4 <- feols(f(freedom, 1) ~ fbic*factor(regime) + gdppc_log + rents + oda | 
-                          country + year, 
-                        data     = base,
-                        cluster  = 'country',
-                        panel.id = ~country+year)
+                        country + year, 
+                      data     = base,
+                      cluster  = 'country',
+                      panel.id = ~country+year)
 
 fixest_h2_m5 <- feols(f(freedom, 1) ~ fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
-                          country + year, 
-                        data     = base, 
-                        cluster  = 'country', 
-                        panel.id = ~country+year)
+                        country + year, 
+                      data     = base, 
+                      cluster  = 'country', 
+                      panel.id = ~country+year)
 
 fixest_h2 <- list(
   'Model 2.1' = fixest_h2_m1,
@@ -155,15 +227,87 @@ modelsummary(fixest_h2,
                          'adj.r.squared', 'r2.within.adjusted'),
              output = 'latex')
 
+## Simple ----------------------------------------------------------------------
+
+fixest_h2_m6 <- feols(f(freedom, 1) ~ fbic*factor(regime) | 
+                          country + year, 
+                        data     = base, 
+                        cluster  = 'country', 
+                        panel.id = ~country+year)
+
+fixest_h2_m7 <- feols(f(freedom, 1) ~ fbic*factor(regime) + l(gdppc_log, 1) | 
+                          country + year, 
+                        data     = base, 
+                        cluster  = 'country', 
+                        panel.id = ~country+year)
+
+fixest_h2_m8 <- feols(f(freedom, 1) ~ fbic*factor(regime) + l(gdppc_log, 1) + l(rents, 1) | 
+                          country + year, 
+                        data     = base, 
+                        cluster  = 'country', 
+                        panel.id = ~country+year)
+
+fixest_h2_m9 <- feols(f(freedom, 1) ~ fbic*factor(regime) + l(gdppc_log, 1) + l(rents, 1) + l(oda, 1) |  
+                          country + year, 
+                        data     = base,
+                        cluster  = 'country',
+                        panel.id = ~country+year)
+
+fixest_h2_m10 <- feols(f(freedom, 1) ~ fbic*factor(regime) + l(gdppc_log, 1) + l(rents, 1) + l(oda, 1) + l(west_2_fbic, 1) | 
+                          country + year, 
+                        data     = base, 
+                        cluster  = 'country', 
+                        panel.id = ~country+year)
+
+fixest_h2 <- list(
+  'Model 2.1' = fixest_h2_m6,
+  'Model 2.2' = fixest_h2_m7,
+  'Model 2.3' = fixest_h2_m8,
+  'Model 2.4' = fixest_h2_m9,
+  'Model 2.5' = fixest_h2_m10
+)
+
+fixest_h2_map <- list(
+  'fbic'                 = 'Linkages to China',
+  'factor(regime)1'      = 'Electoral autocracy',
+  'factor(regime)2'      = 'Electoral democracy',
+  'factor(regime)3'      = 'Liberal democracy',
+  'fbic:factor(regime)1' = 'China x El.Aut.',
+  'fbic:factor(regime)2' = 'China x El.Dem.',
+  'fbic:factor(regime)3' = 'China x Lib.Dem.',
+  'l(gdppc_log, 1)'            = 'log(GDP per capita)',
+  'l(rents, 1)'                = 'Resource rents',
+  'l(oda, 1)'                  = 'Aid',
+  'l(west_2_fbic, 1)'          = 'Linkages (West)'
+)
+
+modelsummary(fixest_h2, 
+             stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
+             coef_map = fixest_h2_map,
+             gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
+                         'adj.r.squared', 'r2.within.adjusted'))
+
+modelsummary(fixest_h2, 
+             stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
+             coef_map = fixest_h2_map,
+             gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
+                         'adj.r.squared', 'r2.within.adjusted'),
+             output = 'latex')
+
 
 ## Simple 2 --------------------------------------------------------------------
+
+# Here I test different ways to use interaction with fixest. I think the safest
+# option is to use the specification I am already using, as this corresponds to
+# The results I get from using the standard notation.
+
 base2 <- base %>% 
   mutate(regime = factor(regime))
 
 base2 <- panel(base2, ~country+year)
 
 
-fixest_h2_m1 <- feols(f(freedom, 1) ~ i(regime, fbic) | 
+fixest_h2_m1.1 <- feols(f(freedom, 1) ~ i(regime, fbic) | 
                         country + year, 
                       data     = base2, 
                       cluster  = 'country')
@@ -177,61 +321,6 @@ fixest_h2_m1.3 <- feols(f(freedom, 1) ~ fbic + regime + i(regime, fbic, ref = 0)
                           country + year, 
                         data     = base2, 
                         cluster  = 'country')
-
-fixest_h2_m2 <- feols(f(freedom, 1) ~ i(regime, fbic) + gdppc_log |
-                        country + year, 
-                      data     = base2, 
-                      cluster  = 'country')
-
-fixest_h2_m3 <- feols(f(freedom, 1) ~ i(regime, fbic) + gdppc_log + rents | 
-                        country + year, 
-                      data     = base2, 
-                      cluster  = 'country')
-
-fixest_h2_m4 <- feols(f(freedom, 1) ~ i(regime, fbic) + gdppc_log + rents + oda | 
-                        country + year, 
-                      data     = base2,
-                      cluster  = 'country')
-
-fixest_h2_m5 <- feols(f(freedom, 1) ~ i(regime, fbic) + gdppc_log + rents + oda + west_2_fbic | 
-                        country + year, 
-                      data     = base2, 
-                      cluster  = 'country')
-
-fixest_h2 <- list(
-  'Model 2.1' = fixest_h2_m1,
-  'Model 2.2' = fixest_h2_m2,
-  'Model 2.3' = fixest_h2_m3,
-  'Model 2.4' = fixest_h2_m4,
-  'Model 2.5' = fixest_h2_m5
-)
-
-fixest_h2_map <- list(
-  'fbic'                 = 'Linkages to China',
-  'regime1'      = 'Electoral autocracy',
-  'regime2'      = 'Electoral democracy',
-  'regime3'      = 'Liberal democracy',
-  'fbic:regime1' = 'China x El.Aut.',
-  'fbic:regime2' = 'China x El.Dem.',
-  'fbic:regime3' = 'China x Lib.Dem.',
-  'gdppc_log'            = 'log(GDP per capita)',
-  'rents'                = 'Resource rents',
-  'oda'                  = 'Aid',
-  'west_2_fbic'          = 'Linkages (West)'
-)
-
-modelsummary(fixest_h2, 
-             stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
-             #coef_map = fixest_h2_map,
-             gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
-                         'adj.r.squared', 'r2.within.adjusted'))
-
-modelsummary(fixest_h2, 
-             stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
-             coef_map = fixest_h2_map,
-             gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
-                         'adj.r.squared', 'r2.within.adjusted'),
-             output = 'latex')
 
 # RESIDUALS --------------------------------------------------------------------
 
