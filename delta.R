@@ -19,7 +19,86 @@ base <- base %>%
 
 # HYPOTHESIS 1 -----------------------------------------------------------------
 
-## Model 1 ---------------------------------------------------------------------
+## Delta -----------------------------------------------------------------------
+
+fixest_h1_m1_delta <- feols(f(freedom, 1) ~ delta_fbic | 
+                              country + year, 
+                            data     = base, 
+                            cluster  = 'country', 
+                            panel.id = ~country+year)
+
+fixest_h1_m2_delta <- feols(f(freedom, 1) ~ delta_fbic + gdppc_log | 
+                              country + year, 
+                            data     = base, 
+                            cluster  = 'country',
+                            panel.id = ~country+year)
+
+fixest_h1_m3_delta <- feols(f(freedom, 1) ~ delta_fbic + gdppc_log + rents | 
+                              country + year, 
+                            data     = base, 
+                            cluster  = 'country', 
+                            panel.id = ~country+year)
+
+fixest_h1_m4_delta <- feols(f(freedom, 1) ~ delta_fbic + gdppc_log + rents + oda | 
+                              country + year, 
+                            data     = base, 
+                            cluster  = 'country', 
+                            panel.id = ~country+year)
+
+fixest_h1_m5_delta <- feols(f(freedom, 1) ~ delta_fbic + gdppc_log + rents + oda + west_2_fbic |
+                              country + year, 
+                            data     = base, 
+                            cluster  = 'country', 
+                            panel.id = ~country+year)
+
+fixest_h1_m6_delta <- feols(f(freedom, 1) ~ delta_fbic + gdppc_log + rents + oda + west_2_fbic + factor(regime) |
+                              country + year, 
+                            data     = base, 
+                            cluster  = 'country',
+                            panel.id = ~country+year)
+
+
+fixest_h1_delta <- list(
+  'Model 1.7'  = fixest_h1_m1_delta,
+  'Model 1.8'  = fixest_h1_m2_delta,
+  'Model 1.9'  = fixest_h1_m3_delta,
+  'Model 1.10' = fixest_h1_m4_delta,
+  'Model 1.11' = fixest_h1_m5_delta,
+  'Model 1.12' = fixest_h1_m6_delta
+)
+
+fixest_h1_delta_map <- list(
+  'delta_fbic'      = 'Linkages to China',
+  'gdppc_log'       = 'log(GDP per capita)',
+  'rents'           = 'Resource rents',
+  'oda'             = 'Aid',
+  'west_2_fbic'     = 'Linkages (West)',
+  'factor(regime)1' = 'Electoral autocracy',
+  'factor(regime)2' = 'Electoral democracy',
+  'factor(regime)3' = 'Liberal democracy'
+)
+
+modelsummary(fixest_h1_delta, 
+             stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001),
+             coef_map = fixest_h1_delta_map,
+             gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
+                         'adj.r.squared', 'r2.within.adjusted'))
+
+modelsummary(fixest_h1_delta, 
+             stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001),
+             coef_map = fixest_h1_delta_map,
+             gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
+                         'adj.r.squared', 'r2.within.adjusted'),
+             output = 'latex')
+
+## Different specifications ----------------------------------------------------
+
+# What are the below models? I cannot remember.
+# I think I experimented with different procedures for adding number of years of
+# change to the model. I think the results were fairly similar, but as the delta
+# models are rejected, I will not bother re-running them. 
+
+### Model 1 --------------------------------------------------------------------
 
 delta_h1_m1 <- feols(f(freedom, 1) ~ delta_fbic | 
                               country + year, 
@@ -91,7 +170,7 @@ modelsummary(delta_h1,
                          'adj.r.squared', 'r2.within.adjusted'),
              output = 'latex')
 
-## Model 2 ---------------------------------------------------------------------
+### Model 2 --------------------------------------------------------------------
 
 
 delta_h1_m7 <- feols(f(freedom, 1) ~ d(fbic, 3) | 
@@ -164,7 +243,7 @@ modelsummary(delta_h1_2,
                          'adj.r.squared', 'r2.within.adjusted'),
              output = 'latex')
 
-## Model 3 ---------------------------------------------------------------------
+### Model 3 --------------------------------------------------------------------
 
 
 delta_h1_m13 <- feols(f(freedom, 1) ~ d(fbic, 3) | 
@@ -239,6 +318,75 @@ modelsummary(delta_h1_3,
 
 # HYPOTHESIS 2 -----------------------------------------------------------------
 
+## Delta -----------------------------------------------------------------------
+
+fixest_h2_m1_delta <- feols(f(freedom, 1) ~ delta_fbic*factor(regime) | 
+                              country + year, 
+                            data     = base, 
+                            cluster  = 'country', 
+                            panel.id = ~country+year)
+
+fixest_h2_m2_delta <- feols(f(freedom, 1) ~ delta_fbic*factor(regime) + gdppc_log |
+                              country + year, 
+                            data     = base, 
+                            cluster  = 'country', 
+                            panel.id = ~country+year)
+
+fixest_h2_m3_delta <- feols(f(freedom, 1) ~ delta_fbic*factor(regime) + gdppc_log + rents | 
+                              country + year, 
+                            data     = base, 
+                            cluster  = 'country', 
+                            panel.id = ~country+year)
+
+fixest_h2_m4_delta <- feols(f(freedom, 1) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda | 
+                              country + year, 
+                            data     = base,
+                            cluster  = 'country',
+                            panel.id = ~country+year)
+
+fixest_h2_m5_delta <- feols(f(freedom, 1) ~ delta_fbic*factor(regime) + gdppc_log + rents + oda + west_2_fbic | 
+                              country+ year, 
+                            data     = base, 
+                            cluster  = 'country', 
+                            panel.id = ~country+year)
+
+fixest_h2_delta <- list(
+  'Model 2.6'  = fixest_h2_m1_delta,
+  'Model 2.7'  = fixest_h2_m2_delta,
+  'Model 2.8'  = fixest_h2_m3_delta,
+  'Model 2.9'  = fixest_h2_m4_delta,
+  'Model 2.10' = fixest_h2_m5_delta
+)
+
+fixest_h2_delta_map <- list(
+  'delta_fbic'                 = 'Linkages to China',
+  'factor(regime)1'            = 'Electoral autocracy',
+  'factor(regime)2'            = 'Electoral democracy',
+  'factor(regime)3'            = 'Liberal democracy',
+  'delta_fbic:factor(regime)1' = 'China x El.Aut.',
+  'delta_fbic:factor(regime)2' = 'China x El.Dem.',
+  'delta_fbic:factor(regime)3' = 'China x Lib.Dem.',
+  'gdppc_log'                  = 'log(GDP per capita)',
+  'rents'                      = 'Resource rents',
+  'oda'                        = 'Aid',
+  'west_2_fbic'                = 'Linkages (West)'
+)
+
+modelsummary(fixest_h2_delta, 
+             stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
+             coef_map = fixest_h2_delta_map,
+             gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
+                         'adj.r.squared', 'r2.within.adjusted'))
+
+modelsummary(fixest_h2_delta, 
+             stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
+             coef_map = fixest_h2_delta_map,
+             gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
+                         'adj.r.squared', 'r2.within.adjusted'),
+             output = 'latex')
+
+## Previous spec ---------------------------------------------------------------
+
 delta_h2_m1 <- feols(f(freedom, 1) ~ delta_fbic*factor(regime) | 
                               country + year, 
                             data     = base, 
@@ -307,3 +455,29 @@ modelsummary(delta_h2,
 # RESIDUALS --------------------------------------------------------------------
 
 plot(fitted(delta_h1_m18), resid(delta_h1_m18))
+
+## H1 delta --------------------------------------------------------------------
+
+plot(fitted(fixest_h1_m1_delta), resid(fixest_h1_m1_delta))
+
+plot(fitted(fixest_h1_m2_delta), resid(fixest_h1_m2_delta))
+
+plot(fitted(fixest_h1_m3_delta), resid(fixest_h1_m3_delta))
+
+plot(fitted(fixest_h1_m4_delta), resid(fixest_h1_m4_delta))
+
+plot(fitted(fixest_h1_m5_delta), resid(fixest_h1_m5_delta))
+
+plot(fitted(fixest_h1_m6_delta), resid(fixest_h1_m6_delta))
+
+## H2 delta --------------------------------------------------------------------
+
+plot(fitted(fixest_h2_m1_delta), resid(fixest_h2_m1_delta))
+
+plot(fitted(fixest_h2_m2_delta), resid(fixest_h2_m2_delta))
+
+plot(fitted(fixest_h2_m3_delta), resid(fixest_h2_m3_delta))
+
+plot(fitted(fixest_h2_m4_delta), resid(fixest_h2_m4_delta))
+
+plot(fitted(fixest_h2_m5_delta), resid(fixest_h2_m5_delta))
