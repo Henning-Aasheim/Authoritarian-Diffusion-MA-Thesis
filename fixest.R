@@ -381,7 +381,12 @@ base %>%
         legend.text = element_text(size = 15),
         plot.margin = margin(t = 20, r = 20, b = 20, l = 20, unit = 'pt'))
 
-ggsave('illustrations/residuals.jpeg', units = 'px', width = 2700, height = 2000, dpi = 300)
+if(!file.exists('illustrations/residuals.jpeg')){
+  ggsave('illustrations/residuals.jpeg', units = 'px', width = 2700, height = 2000, dpi = 300)
+}
+
+perfect <- base %>% 
+  filter(residuals < .0002 & residuals > -.0002)
 
 # PLOT -------------------------------------------------------------------------
 
