@@ -355,8 +355,8 @@ plot(fitted(fixest_h2_m5), resid(fixest_h2_m5))
 library(ggrepel)
 
 
-base$residuals <- residuals(fixest_h2_m5_delta, na.rm = F)
-base$fit <- fitted(fixest_h2_m5_delta, na.rm = F)
+base$residuals <- residuals(fixest_h2_m5, na.rm = F)
+base$fit <- fitted(fixest_h2_m5, na.rm = F)
 
 base %>% 
   ggplot(aes(x = fit, y = residuals)) +
@@ -369,8 +369,8 @@ base %>%
   geom_hline(yintercept = 0) +
   scale_x_continuous(breaks = seq(0, 1, .2)) +
   scale_y_continuous(breaks = seq(-.5, .5, .1)) +
-  scale_colour_manual(values = c('#ff6e54', '#ff9214', '#003f5c', '#dd5182', '#955196')) +
-  labs(x = 'Fit',
+  scale_colour_manual(values = c('#ff6e54', '#003f5c', '#ff9214', '#dd5182', '#955196', '#444e86')) +
+  labs(x = 'Fitted Value',
        y = 'Residuals',
        colour = 'Country:') +
   theme_classic(base_family = 'serif') +
@@ -381,9 +381,11 @@ base %>%
         legend.text = element_text(size = 15),
         plot.margin = margin(t = 20, r = 20, b = 20, l = 20, unit = 'pt'))
 
+ggsave('illustrations/residuals.jpeg', units = 'px', width = 2700, height = 2000, dpi = 300)
+
 # PLOT -------------------------------------------------------------------------
 
-## H1 --------------------------------------------------------------------------
+## H2 --------------------------------------------------------------------------
 
 library(broom)
 
