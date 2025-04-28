@@ -10,6 +10,9 @@ options("modelsummary_format_numeric_latex" = "plain")
 
 load('data/base.RData')
 
+base_regime_binary <- base %>% 
+  mutate(hybrid = ifelse(regime %in% c(1, 2), 1, 0))
+
 # HYPOTHESIS 1 -----------------------------------------------------------------
 
 ## Simple ----------------------------------------------------------------------
@@ -227,7 +230,7 @@ modelsummary(fixest_h2,
                          'adj.r.squared', 'r2.within.adjusted'),
              output = 'latex')
 
-## Simple ----------------------------------------------------------------------
+## Lagged controls -------------------------------------------------------------
 
 fixest_h2_m6 <- feols(f(freedom, 1) ~ fbic*factor(regime) | 
                           country + year, 
@@ -295,7 +298,7 @@ modelsummary(fixest_h2,
              output = 'latex')
 
 
-## Simple 2 --------------------------------------------------------------------
+## Interaction experiment ------------------------------------------------------
 
 # Here I test different ways to use interaction with fixest. I think the safest
 # option is to use the specification I am already using, as this corresponds to
@@ -321,6 +324,69 @@ fixest_h2_m1.3 <- feols(f(freedom, 1) ~ fbic + regime + i(regime, fbic, ref = 0)
                           country + year, 
                         data     = base2, 
                         cluster  = 'country')
+
+## Hybrid ----------------------------------------------------------------------
+
+hybrid_h2_m1 <- feols(f(freedom, 1) ~ fbic*factor(hybrid) | 
+                        country + year, 
+                      data     = base_regime_binary, 
+                      cluster  = 'country', 
+                      panel.id = ~country+year)
+
+hybrid_h2_m2 <- feols(f(freedom, 1) ~ fbic*factor(hybrid) + gdppc_log |
+                        country + year, 
+                      data     = base_regime_binary, 
+                      cluster  = 'country', 
+                      panel.id = ~country+year)
+
+hybrid_h2_m3 <- feols(f(freedom, 1) ~ fbic*factor(hybrid) + gdppc_log + rents | 
+                        country + year, 
+                      data     = base_regime_binary, 
+                      cluster  = 'country', 
+                      panel.id = ~country+year)
+
+hybrid_h2_m4 <- feols(f(freedom, 1) ~ fbic*factor(hybrid) + gdppc_log + rents + oda | 
+                        country + year, 
+                      data     = base_regime_binary,
+                      cluster  = 'country',
+                      panel.id = ~country+year)
+
+hybrid_h2_m5 <- feols(f(freedom, 1) ~ fbic*factor(hybrid) + gdppc_log + rents + oda + west_2_fbic | 
+                        country + year, 
+                      data     = base_regime_binary, 
+                      cluster  = 'country', 
+                      panel.id = ~country+year)
+
+hybrid_h2 <- list(
+  'Model 2.1' = hybrid_h2_m1,
+  'Model 2.2' = hybrid_h2_m2,
+  'Model 2.3' = hybrid_h2_m3,
+  'Model 2.4' = hybrid_h2_m4,
+  'Model 2.5' = hybrid_h2_m5
+)
+
+hybrid_h2_map <- list(
+  'fbic'                 = 'China x Consolidated',
+  'factor(hybrid)1'      = 'Hybrid',
+  'fbic:factor(hybrid)1' = 'China x Hybrid',
+  'gdppc_log'            = 'log(GDP per capita)',
+  'rents'                = 'Resource rents',
+  'oda'                  = 'Aid',
+  'west_2_fbic'          = 'Linkages (West)'
+)
+
+modelsummary(hybrid_h2, 
+             stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
+             coef_map = hybrid_h2_map,
+             gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
+                         'adj.r.squared', 'r2.within.adjusted'))
+
+modelsummary(hybrid_h2, 
+             stars = c("x" = .1, "*" = .05,"**" = .01, '***' = .001), 
+             coef_map = hybrid_h2_map,
+             gof_map = c('nobs', 'vcov.type', 'FE: country', 'FE: year', 
+                         'adj.r.squared', 'r2.within.adjusted'),
+             output = 'latex')
 
 # RESIDUALS --------------------------------------------------------------------
 
