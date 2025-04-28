@@ -386,7 +386,8 @@ if(!file.exists('illustrations/residuals.jpeg')){
 }
 
 perfect <- base %>% 
-  filter(residuals < .0002 & residuals > -.0002)
+  mutate(freedom = lead(freedom, 1)) %>% 
+  filter(residuals < .005 & residuals > -.005)
 
 # PLOT -------------------------------------------------------------------------
 
