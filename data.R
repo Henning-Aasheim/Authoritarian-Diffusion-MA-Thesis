@@ -103,12 +103,14 @@ base <- vdem %>%
   select(c(country_name,
            iso3c,
            year, 
-           v2x_freexp_altinf, # Freedom of Expression and Alternative Information index (V-Dem Codebook, pp. 50-51)
-           v2mecenefi,        # Internet censorship effort (V-Dem Codebook, pp. 207-208)
-           v2x_regime)) %>%   # Regimes of the world ordinal scale (V-Dem Codebook, pp. 292-293)
+           v2x_freexp_altinf,   # Freedom of Expression and Alternative Information index (V-Dem Codebook, pp. 50-51)
+           v2mecenefi,          # Internet censorship effort (V-Dem Codebook, pp. 207-208)
+           v2x_regime,          # Regimes of the world ordinal scale (V-Dem Codebook, pp. 292-293)
+           e_regionpol_7C)) %>% # Region variable with 7 categories (V-Dem Codebook p. 395) 
   rename(freedom  = v2x_freexp_altinf,
          internet = v2mecenefi,
-         regime   = v2x_regime)
+         regime   = v2x_regime,
+         region   = e_regionpol_7C)
 
 # FBIC INDEX DATA --------------------------------------------------------------
 
@@ -549,6 +551,7 @@ attr(base$internet,  'label') <- 'Internet censorship (v2mecenefi)'
 attr(base$fbic,      'label') <- 'FBIC index score from China (fbic)'
 attr(base$bandwidth, 'label') <- 'FBIC bandwidth score from China (bandwidth)'
 attr(base$regime,    'label') <- 'Ordinal regime variable 0-3 (v2x_regime)'
+attr(base$region,    'label') <- 'Ordinal region variable with 7 categories 1-7 (e_regionpol_7C)'
 attr(base$west_1_fbic,            'label') <- 'FBIC index total score from the \'West\' (restricted)'
 attr(base$west_1_bandwidth,       'label') <- 'FBIC bandwidth total score from the \'West\' (expanded)'
 attr(base$west_2_fbic,            'label') <- 'FBIC index total score from the \'West\' (restricted)'
