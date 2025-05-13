@@ -88,6 +88,9 @@ declining_indicators_4 <- data.frame(
   decline = c(44, 41, 41, 35, 33, 33, 32, 32, 32, 31, 30, 30, 29, 29, 28, 28, 27, 27, 27, 27)
 )
 
+declining_indicators_4 <- declining_indicators_4 %>% 
+  mutate(type_2 = ifelse(type == 'Freedom of Expression', 'Freedom of Expression', 'Other Components'))
+
 ## Plot ------------------------------------------------------------------------
 
 declining_indicators_4 %>% 
@@ -106,6 +109,33 @@ declining_indicators_4 %>%
   theme_classic(base_family = 'serif') +
   theme(legend.position = 'bottom',
         legend.justification = c(0, 1),
+        legend.margin = margin(l = -100, unit = 'mm'),
+        axis.title = element_text(size = 15, face = 'bold'),
+        legend.title = element_text(size = 15, face = 'bold'),
+        axis.text = element_text(size = 15),
+        legend.text = element_text(size = 15),
+        panel.grid.major.x = element_line(),
+        panel.grid.minor.x = element_line(linetype = 'dashed'),
+        plot.margin = margin(t = 20, r = 20, b = 20, l = 20, unit = 'pt'))
+
+ggsave('illustrations/declining_indicators.jpeg', units = 'px', width = 2700, height = 2000, dpi = 300)
+
+
+declining_indicators_4 %>% 
+  ggplot(aes(y = reorder(indicator, decline))) +
+  geom_bar(aes(x = decline, fill = type_2),
+           stat = 'identity', 
+           width = 0.7,
+           position = position_dodge(width = .75)) +
+  scale_x_continuous(expand = expansion(mult = 0),
+                     breaks = seq(0, 46, 4)) +
+  scale_fill_manual(values = c('#003f5c', '#ff9214')) +
+  labs(x    = 'Number of declining countries',
+       y    = NULL,
+       fill = 'Type:') +
+  guides(fill = guide_legend(nrow = 1)) +
+  theme_classic(base_family = 'serif') +
+  theme(legend.position = 'bottom',
         legend.margin = margin(l = -100, unit = 'mm'),
         axis.title = element_text(size = 15, face = 'bold'),
         legend.title = element_text(size = 15, face = 'bold'),
@@ -231,16 +261,21 @@ map_base_change %>%
   filter(iso3c != 'ATA') %>% 
   ggplot(aes(long, lat, group = group)) + 
   coord_fixed(1.3) +
-  geom_polygon(aes(fill = fbic_nom), colour = 'black') +
+  geom_polygon(aes(fill = fbic_nom), colour = 'black', linewidth = .2) +
   scale_fill_manual(values = palette_chn, breaks = breaks_chn, na.value = 'grey40') +
   labs(fill = 'Chinese influence:') +
-  guides(fill = guide_legend(nrow = 3)) +
+  guides(fill = guide_legend(nrow = 3,
+                             title.position = 'top')) +
   theme_void(base_family = 'serif') +
   theme(legend.position = 'bottom',
         legend.title = element_text(margin = margin(b = 18, r = 10, unit = 'pt'),
                                     face   = 'bold',
-                                    size   = 15),
-        legend.key.size = unit(8, 'mm'))
+                                    size   = 15,
+                                    hjust = .5),
+        legend.key.size = unit(8, 'mm'),
+        legend.text = element_text(size = 13))
+
+ggsave('illustrations/chinese_influence.jpeg', units = 'px', width = 2700, height = 2000, dpi = 300)
 
 # CHANGE IN WESTERN LINKAGES ---------------------------------------------------
 
@@ -274,13 +309,16 @@ map_base_change_west_2 %>%
   geom_polygon(aes(fill = fbic_nom), colour = 'black', linewidth = .2) +
   scale_fill_manual(values = palette_chn, breaks = breaks_chn) +
   labs(fill = 'Western influence:') +
-  guides(fill = guide_legend(nrow = 3)) +
+  guides(fill = guide_legend(nrow = 3,
+                             title.position = 'top')) +
   theme_void(base_family = 'serif') +
   theme(legend.position = 'bottom',
         legend.title = element_text(margin = margin(b = 18, r = 10, unit = 'pt'),
                                     face   = 'bold',
-                                    size   = 15),
-        legend.key.size = unit(8, 'mm'))
+                                    size   = 15,
+                                    hjust = .5),
+        legend.key.size = unit(8, 'mm'),
+        legend.text = element_text(size = 13))
 
 ggsave('illustrations/western_influence.jpeg', units = 'px', width = 2700, height = 2000, dpi = 300)
 

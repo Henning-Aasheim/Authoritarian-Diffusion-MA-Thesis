@@ -423,13 +423,16 @@ map_base_change %>%
   geom_polygon(aes(fill = fbic_nom), colour = 'black') +
   scale_fill_manual(values = palette_chn, breaks = breaks_chn, na.value = 'grey40') +
   labs(fill = 'Chinese influence:') +
-  guides(fill = guide_legend(nrow = 3)) +
+  guides(fill = guide_legend(nrow = 3,
+                             title.position = 'top')) +
   theme_void(base_family = 'serif') +
   theme(legend.position = 'bottom',
         legend.title = element_text(margin = margin(b = 18, r = 10, unit = 'pt'),
                                     face   = 'bold',
-                                    size   = 15),
-        legend.key.size = unit(8, 'mm'))
+                                    size   = 15,
+                                    hjust = .5),
+        legend.key.size = unit(8, 'mm'),
+        legend.text = element_text(size = 13))
 
 ## Map of change in Western influence [Restricted] (Nominal) -------------------
 
@@ -456,13 +459,16 @@ map_base_change_west_2 %>%
   geom_polygon(aes(fill = fbic_nom), colour = 'black') +
   scale_fill_manual(values = palette_chn, breaks = breaks_chn) +
   labs(fill = 'Western influence:') +
-  guides(fill = guide_legend(nrow = 3)) +
+  guides(fill = guide_legend(nrow = 3,
+                             title.position = 'top')) +
   theme_void(base_family = 'serif') +
   theme(legend.position = 'bottom',
         legend.title = element_text(margin = margin(b = 18, r = 10, unit = 'pt'),
                                     face   = 'bold',
-                                    size   = 15),
-        legend.key.size = unit(8, 'mm'))
+                                    size   = 15,
+                                    hjust = .5),
+        legend.key.size = unit(8, 'mm'),
+        legend.text = element_text(size = 13))
 
 # TABLES -----------------------------------------------------------------------
 
